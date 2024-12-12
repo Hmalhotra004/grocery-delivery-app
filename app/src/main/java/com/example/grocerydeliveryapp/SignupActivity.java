@@ -18,7 +18,7 @@ public class SignupActivity extends AppCompatActivity {
   public Button btnSignUp;
   public TextView tvLogin;
 
-  private FirebaseAuth mAuth;
+  private FirebaseAuth firebaseAuth;
   private FirebaseFirestore db;
 
   @Override
@@ -26,7 +26,7 @@ public class SignupActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_signup);
 
-    mAuth = FirebaseAuth.getInstance();
+    firebaseAuth = FirebaseAuth.getInstance();
     db = FirebaseFirestore.getInstance();
 
     etName = findViewById(R.id.et_name);
@@ -56,11 +56,10 @@ public class SignupActivity extends AppCompatActivity {
       return;
     }
 
-    mAuth.createUserWithEmailAndPassword(email, password)
+    firebaseAuth.createUserWithEmailAndPassword(email, password)
       .addOnCompleteListener(this, task -> {
         if (task.isSuccessful()) {
-          // Sign-up success
-          String userId = mAuth.getCurrentUser().getUid();
+          String userId = firebaseAuth.getCurrentUser().getUid();
 
           // Save user data to Firestore
           Map<String, Object> user = new HashMap<>();
@@ -75,12 +74,11 @@ public class SignupActivity extends AppCompatActivity {
               finish();
             })
             .addOnFailureListener(e -> {
-              Toast.makeText(SignupActivity.this, "Error saving user data", Toast.LENGTH_SHORT).show();
+              Toast.makeText(SignupActivity.this, "Something went wrong.", Toast.LENGTH_SHORT).show();
             });
 
         } else {
-          // If sign-up fails
-          Toast.makeText(SignupActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+          Toast.makeText(SignupActivity.this, "Something went wrong.", Toast.LENGTH_LONG).show();
         }
       });
   }

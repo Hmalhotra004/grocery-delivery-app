@@ -15,42 +15,39 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
-    public FirebaseAuth mAuth;
-    public Button logoutBtn;
+  public FirebaseAuth firebaseAuth;
+  public Button logoutBtn;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    EdgeToEdge.enable(this);
+    setContentView(R.layout.activity_main);
 
-        // Initialize FirebaseAuth
-        mAuth = FirebaseAuth.getInstance();
+    logoutBtn = findViewById(R.id.logout_btn);
 
-        // Check if user is logged in
-        if (mAuth.getCurrentUser() == null) {
-            // If the user is not logged in, redirect to the login page
-            startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            finish();  // Close the current activity to prevent the user from returning to this screen
-        }
+    firebaseAuth = FirebaseAuth.getInstance();
 
-        logoutBtn = findViewById(R.id.logout_btn);
-
-        // Handle window insets for edge-to-edge layout
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
-
-        logoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mAuth.signOut();
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                finish();
-            }
-        });
-
+    if (firebaseAuth.getCurrentUser() == null) {
+      startActivity(new Intent(MainActivity.this, LoginActivity.class));
+      finish();
     }
+
+
+    // Handle window insets for edge-to-edge layout
+    ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+      Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+      v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+      return insets;
+    });
+
+    logoutBtn.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        firebaseAuth.signOut();
+        startActivity(new Intent(MainActivity.this, LoginActivity.class));
+        finish();
+      }
+    });
+  }
 }

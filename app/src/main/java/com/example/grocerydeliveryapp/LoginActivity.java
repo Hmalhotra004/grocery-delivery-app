@@ -12,61 +12,57 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class LoginActivity extends AppCompatActivity {
 
-    public EditText etEmail, etPassword;
-    public Button btnLogin;
-    public TextView tvSignUp;
+  public EditText etEmail, etPassword;
+  public Button btnLogin;
+  public TextView tvSignUp;
 
-    private FirebaseAuth mAuth;
+  private FirebaseAuth firebaseAuth;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_login);
 
-        mAuth = FirebaseAuth.getInstance();
+    firebaseAuth = FirebaseAuth.getInstance();
 
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser != null) {
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            finish();
+    FirebaseUser currentUser = firebaseAuth.getCurrentUser();
+    if (currentUser != null) {
+      startActivity(new Intent(LoginActivity.this, MainActivity.class));
+      finish();
+    }
+
+    etEmail = findViewById(R.id.et_email);
+    etPassword = findViewById(R.id.et_password);
+    btnLogin = findViewById(R.id.btn_login);
+    tvSignUp = findViewById(R.id.tv_signup);
+
+    btnLogin.setOnClickListener(v -> login());
+    tvSignUp.setOnClickListener(v -> openSignUpPage());
+  }
+
+  private void login() {
+    String email = etEmail.getText().toString().trim();
+    String password = etPassword.getText().toString().trim();
+
+    if (email.isEmpty() || password.isEmpty()) {
+      Toast.makeText(this, "Please enter both email and password", Toast.LENGTH_SHORT).show();
+      return;
+    }
+
+    firebaseAuth.signInWithEmailAndPassword(email, password)
+      .addOnCompleteListener(this, task -> {
+        if (task.isSuccessful()) {
+          Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+          startActivity(new Intent(LoginActivity.this, MainActivity.class));
+          finish();
+        } else {
+          Toast.makeText(LoginActivity.this, "Invalid Credentials.", Toast.LENGTH_SHORT).show();
         }
+      });
+  }
 
-        etEmail = findViewById(R.id.et_email);
-        etPassword = findViewById(R.id.et_password);
-        btnLogin = findViewById(R.id.btn_login);
-        tvSignUp = findViewById(R.id.tv_signup);
-
-        btnLogin.setOnClickListener(v -> login());
-        tvSignUp.setOnClickListener(v -> openSignUpPage());
-    }
-
-    private void login() {
-        String email = etEmail.getText().toString().trim();
-        String password = etPassword.getText().toString().trim();
-
-        if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Please enter both email and password", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        // Sign-in success
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                        // Redirect to Home Activity or Main App screen
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        finish();
-                    } else {
-                        // If sign-in fails
-                        Toast.makeText(LoginActivity.this, "Invalid Credentials.", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
-    private void openSignUpPage() {
-        Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
-        startActivity(intent);
-    }
+  private void openSignUpPage() {
+    Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+    startActivity(intent);
+  }
 }
