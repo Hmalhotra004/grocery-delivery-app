@@ -27,7 +27,6 @@ public class LoginActivity extends AppCompatActivity {
 
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            // User is already logged in, redirect to Home activity
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
         }
@@ -61,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
                         finish();
                     } else {
                         // If sign-in fails
-                        Toast.makeText(LoginActivity.this, "Authentication failed.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this, "Invalid Credentials.", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
