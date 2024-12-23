@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Grocery Delivery App</string>
+    <string name="HomeIcon">Home</string>
+    <string name="UserIcon">User</string>
 </resources>
