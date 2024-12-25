@@ -40,17 +40,6 @@
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/viewAllPopular"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:layout_marginEnd="7dp"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:text="@string/ViewAll" />
-
             </LinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView

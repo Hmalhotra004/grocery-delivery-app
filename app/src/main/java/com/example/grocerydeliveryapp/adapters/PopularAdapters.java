@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.example.grocerydeliveryapp.R;
 import com.example.grocerydeliveryapp.models.PopularModel;
 
@@ -29,34 +28,50 @@ public class PopularAdapters extends RecyclerView.Adapter<PopularAdapters.ViewHo
   @NonNull
   @Override
   public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-    return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.popular_item,parent,false));
+    // Inflate the item layout for the RecyclerView
+    return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.popular_item, parent, false));
   }
 
   @Override
   public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-    Glide.with(context).load(popularModelList.get(position).getImgUrl1()).into(holder.popImg1);
-    Glide.with(context).load(popularModelList.get(position).getImgUrl2()).into(holder.popImg2);
-    Glide.with(context).load(popularModelList.get(position).getImgUrl3()).into(holder.popImg3);
-    Glide.with(context).load(popularModelList.get(position).getImgUrl4()).into(holder.popImg4);
-    holder.name.setText(popularModelList.get(position).getName());
+    // Get the current item at the given position
+    PopularModel currentItem = popularModelList.get(position);
+
+    // Set the image resources using the current item
+    holder.popImg1.setImageResource(getImageResource(currentItem.getImageUrl1()));
+    holder.popImg2.setImageResource(getImageResource(currentItem.getImageUrl2()));
+    holder.popImg3.setImageResource(getImageResource(currentItem.getImageUrl3()));
+    holder.popImg4.setImageResource(getImageResource(currentItem.getImageUrl4()));
+
+    // Set the name of the item
+    holder.name.setText(currentItem.getName());
+  }
+
+  private int getImageResource(String imageName) {
+    // Get the resource ID by the image name
+    return context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
   }
 
   @Override
   public int getItemCount() {
+    // Return the number of items in the list
     return popularModelList.size();
   }
 
+  // ViewHolder class to hold references to the views for each item
   public class ViewHolder extends RecyclerView.ViewHolder {
-    ImageView popImg1,popImg2,popImg3,popImg4;
+    ImageView popImg1, popImg2, popImg3, popImg4;
     TextView name;
+
     public ViewHolder(@NonNull View itemView) {
       super(itemView);
 
-      popImg1 = (ImageView) itemView.findViewById(R.id.popImg1);
-      popImg2 = (ImageView) itemView.findViewById(R.id.popImg2);
-      popImg3 = (ImageView) itemView.findViewById(R.id.popImg3);
-      popImg4 = (ImageView) itemView.findViewById(R.id.popImg4);
-      name = (TextView) itemView.findViewById(R.id.popName);
+      // Initialize the ImageView and TextView references
+      popImg1 = itemView.findViewById(R.id.popImg1);
+      popImg2 = itemView.findViewById(R.id.popImg2);
+      popImg3 = itemView.findViewById(R.id.popImg3);
+      popImg4 = itemView.findViewById(R.id.popImg4);
+      name = itemView.findViewById(R.id.popName);
     }
   }
 }

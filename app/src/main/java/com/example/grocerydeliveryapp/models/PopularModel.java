@@ -1,17 +1,18 @@
 package com.example.grocerydeliveryapp.models;
 
 public class PopularModel {
-  String name;
-  String imgUrl1,imgUrl2,imgUrl3,imgUrl4;
+  private String name;
+  private String imageUrl1, imageUrl2, imageUrl3, imageUrl4;
 
-  public PopularModel(String name, String imgUrl1, String imgUrl2, String imgUrl3, String imgUrl4) {
+  public PopularModel(String name, String imageUrl1, String imageUrl2, String imageUrl3, String imageUrl4) {
     this.name = name;
-    this.imgUrl1 = imgUrl1;
-    this.imgUrl2 = imgUrl2;
-    this.imgUrl3 = imgUrl3;
-    this.imgUrl4 = imgUrl4;
+    this.imageUrl1 = imageUrl1;
+    this.imageUrl2 = imageUrl2;
+    this.imageUrl3 = imageUrl3;
+    this.imageUrl4 = imageUrl4;
   }
 
+  // Getters and Setters
   public String getName() {
     return name;
   }
@@ -20,35 +21,35 @@ public class PopularModel {
     this.name = name;
   }
 
-  public String getImgUrl1() {
-    return imgUrl1;
+  public String getImageUrl1() {
+    return imageUrl1;
   }
 
-  public void setImgUrl1(String imgUrl1) {
-    this.imgUrl1 = imgUrl1;
+  public void setImageUrl1(String imageUrl1) {
+    this.imageUrl1 = imageUrl1;
   }
 
-  public String getImgUrl2() {
-    return imgUrl2;
+  public String getImageUrl2() {
+    return imageUrl2;
   }
 
-  public void setImgUrl2(String imgUrl2) {
-    this.imgUrl2 = imgUrl2;
+  public void setImageUrl2(String imageUrl2) {
+    this.imageUrl2 = imageUrl2;
   }
 
-  public String getImgUrl3() {
-    return imgUrl3;
+  public String getImageUrl3() {
+    return imageUrl3;
   }
 
-  public void setImgUrl3(String imgUrl3) {
-    this.imgUrl3 = imgUrl3;
+  public void setImageUrl3(String imageUrl3) {
+    this.imageUrl3 = imageUrl3;
   }
 
-  public String getImgUrl4() {
-    return imgUrl4;
+  public String getImageUrl4() {
+    return imageUrl4;
   }
 
-  public void setImgUrl4(String imgUrl4) {
-    this.imgUrl4 = imgUrl4;
+  public void setImageUrl4(String imageUrl4) {
+    this.imageUrl4 = imageUrl4;
   }
 }

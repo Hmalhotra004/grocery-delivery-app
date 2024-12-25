@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Drinks & Juices",
+    "imageUrl1": "drinks_coke",
+    "imageUrl2": "drinks_real",
+    "imageUrl3": "drinks_up7",
+    "imageUrl4": "drinks_prime"
+  },
+  {
+    "name": "Chips & Namkeen",
+    "imageUrl1": "@drawable/coke",
+    "imageUrl2": "https://example.com/apple.jpg",
+    "imageUrl3": "https://example.com/apple.jpg",
+    "imageUrl4": "https://example.com/apple.jpg"
+  },
+  {
+    "name": "Dairy, Bread & Eggs",
+    "imageUrl1": "@drawable/coke",
+    "imageUrl2": "https://example.com/apple.jpg",
+    "imageUrl3": "https://example.com/apple.jpg",
+    "imageUrl4": "https://example.com/apple.jpg"
+  },
+  {
+    "name": "Ice Cream & More",
+    "imageUrl1": "@drawable/coke",
+    "imageUrl2": "https://example.com/apple.jpg",
+    "imageUrl3": "https://example.com/apple.jpg",
+    "imageUrl4": "https://example.com/apple.jpg"
+  },
+  {
+    "name": "Vegetables & Fruits",
+    "imageUrl1": "@drawable/coke",
+    "imageUrl2": "https://example.com/apple.jpg",
+    "imageUrl3": "https://example.com/apple.jpg",
+    "imageUrl4": "https://example.com/apple.jpg"
+  },
+  {
+    "name": "Sweets & Chocolates",
+    "imageUrl1": "@drawable/coke",
+    "imageUrl2": "https://example.com/apple.jpg",
+    "imageUrl3": "https://example.com/apple.jpg",
+    "imageUrl4": "https://example.com/apple.jpg"
+  }
+]
