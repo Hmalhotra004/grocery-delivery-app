@@ -31,6 +31,23 @@
         android:layout_height="30dp" />
 
     <Button
+        android:id="@+id/detailsBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:backgroundTint="@color/slate200"
+        android:gravity="start|center_vertical"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="@string/DetailsBtn"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:cornerRadius="0dp"
+        app:icon="@drawable/baseline_info_24"
+        app:iconSize="20dp"
+        app:iconTint="@color/black" />
+
+    <Button
         android:id="@+id/ordersBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

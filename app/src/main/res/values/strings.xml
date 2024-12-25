@@ -7,12 +7,13 @@
 
     <string name="logoutBtn">Log out</string>
     <string name="ordersBtn">Your Orders</string>
+    <string name="DetailsBtn">Edit Details</string>
 
     <string name="UserPageTitle">My account</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
-<!--  Home page Strings  -->
+    <!--  Home page Strings  -->
     <string name="search">Search</string>
     <string name="Popular">Popular Products</string>
     <string name="ViewAll">View all</string>
