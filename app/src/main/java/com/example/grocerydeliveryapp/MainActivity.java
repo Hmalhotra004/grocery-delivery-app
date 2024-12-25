@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
         replaceFragment(new ProfileFragment());
       } else if (id == R.id.orders){
         replaceFragment(new ordersFragment());
+      } else if (id == R.id.cart) {
+        replaceFragment(new CartFragment());
       } else {
         return false;
       }
