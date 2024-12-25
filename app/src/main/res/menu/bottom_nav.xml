@@ -6,6 +6,11 @@
         android:icon="@drawable/baseline_home_24"
         android:title="@string/HomeIcon" />
     <item
+        android:id="@+id/orders"
+        android:icon="@drawable/orders"
+        android:title="@string/OrdersIcon"
+        />
+    <item
         android:id="@+id/user"
         android:icon="@drawable/baseline_person_24"
         android:title="@string/UserIcon" />

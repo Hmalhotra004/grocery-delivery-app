@@ -2,9 +2,6 @@ package com.example.grocerydeliveryapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,7 +11,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import com.example.grocerydeliveryapp.R;
+
 
 
 import com.example.grocerydeliveryapp.databinding.ActivityMainBinding;
@@ -25,8 +22,6 @@ public class MainActivity extends AppCompatActivity {
   public FirebaseAuth firebaseAuth;
 
   ActivityMainBinding binding;
-//  public Button logoutBtn;
-
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -36,25 +31,15 @@ public class MainActivity extends AppCompatActivity {
     setContentView(binding.getRoot());
     replaceFragment(new HomeFragment());
 
-//    logoutBtn = findViewById(R.id.logout_btn);
-
     binding.bottomNavigationView.setOnItemSelectedListener(item -> {
       int id = item.getItemId();
-
-//      switch (item.getItemId()){
-//        case R.id.home:
-//          replaceFragment(new HomeFragment());
-//          break;
-//
-//        case R.id.user:
-//          replaceFragment(new ProfileFragment());
-//          break;
-//      }
 
       if (id == R.id.home) {
         replaceFragment(new HomeFragment());
       } else if (id == R.id.user) {
         replaceFragment(new ProfileFragment());
+      } else if (id == R.id.orders){
+        replaceFragment(new ordersFragment());
       } else {
         return false;
       }
@@ -67,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
       startActivity(new Intent(MainActivity.this, LoginActivity.class));
       finish();
     }
-
     
     // Handle window insets for edge-to-edge layout
     ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
@@ -75,15 +59,6 @@ public class MainActivity extends AppCompatActivity {
       v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
       return insets;
     });
-
-//    logoutBtn.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View view) {
-//        firebaseAuth.signOut();
-//        startActivity(new Intent(MainActivity.this, LoginActivity.class));
-//        finish();
-//      }
-//    });
   }
 
   private void replaceFragment(Fragment fragment){

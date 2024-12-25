@@ -1,12 +1,17 @@
 package com.example.grocerydeliveryapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,6 +28,7 @@ public class ProfileFragment extends Fragment {
 
   public FirebaseAuth firebaseAuth;
   public TextView account;
+  public Button logout,orders;
 
   public ProfileFragment() {
     // Required empty public constructor
@@ -45,10 +51,41 @@ public class ProfileFragment extends Fragment {
 
     firebaseAuth = FirebaseAuth.getInstance();
     account = (TextView) view.findViewById(R.id.account);
+    logout = (Button) view.findViewById(R.id.logoutBtn);
+    orders = (Button) view.findViewById(R.id.ordersBtn);
 
     String email = firebaseAuth.getCurrentUser().getEmail();
 
     account.setText(email);
+
+    orders.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frame_layout, new ordersFragment());
+        fragmentTransaction.commit();
+
+        // Update the bottom navigation selection
+        MainActivity mainActivity = (MainActivity) getActivity();
+        if (mainActivity != null) {
+          mainActivity.binding.bottomNavigationView.setSelectedItemId(R.id.orders);
+        }
+      }
+    });
+
+    logout.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        firebaseAuth.signOut();
+        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        startActivity(intent);
+
+        if (getActivity() != null) {
+          getActivity().finish();
+        }
+      }
+    });
 
     return view;
   }

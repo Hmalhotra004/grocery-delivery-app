@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">Grocery Delivery App</string>
     <string name="HomeIcon">Home</string>
+    <string name="OrdersIcon">Orders</string>
     <string name="UserIcon">User</string>
+
     <string name="logoutBtn">Log out</string>
+    <string name="ordersBtn">Your Orders</string>
+
+    <string name="UserPageTitle">My account</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
