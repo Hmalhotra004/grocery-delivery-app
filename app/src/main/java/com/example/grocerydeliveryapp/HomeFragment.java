@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -60,8 +61,8 @@ public class HomeFragment extends Fragment {
     PopRecyclerView = view.findViewById(R.id.popularRec);
     GroceryRecyclerView = view.findViewById(R.id.GroceryKitchenRec);
 
-    PopRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
-    GroceryRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+    PopRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+    GroceryRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
     // Load data and set the adapter
     popularModelList = loadItemsFromJson("popularItems.json", new TypeToken<List<PopularModel>>() {}.getType());
