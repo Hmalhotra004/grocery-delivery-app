@@ -7,7 +7,30 @@
 
     <string name="logoutBtn">Log out</string>
     <string name="ordersBtn">Your Orders</string>
+    <string name="DetailsBtn">Edit Details</string>
+    <string name="ChangePass">Change Password</string>
+    <string name="passwordBtn">Change Password</string>
+    <string name="addPhone">Add Phone Number</string>
 
     <string name="UserPageTitle">My account</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <!--  Home page Strings  -->
+    <string name="search">Search</string>
+    <string name="Popular">Popular Products</string>
+    <string name="ViewAll">View all</string>
+
+    <!--  Edit Details  -->
+    <string name="nameD">Name:</string>
+    <string name="phoneD">Phone:</string>
+
+    <!--  Edit Password  -->
+    <string name="oldPass">Old:</string>
+    <string name="newPass">New:</string>
+    <string name="confirmPass">Confirm:</string>
+
+    <string name="SaveBtn">Save</string>
+    <string name="AddBtn">Add</string>
+
 </resources>

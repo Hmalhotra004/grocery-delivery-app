@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:background="@color/slate200"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:context=".UserDetails">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/slate200"
+        android:gravity="center"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:title="@string/DetailsBtn"
+        app:titleTextColor="@color/black" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:gravity="center"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/black" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_marginStart="18dp"
+            android:textColor="@color/black"
+            android:text="@string/nameD"
+            />
+
+        <EditText
+            android:id="@+id/nameD"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/rounded_background"
+            android:textColor="@color/black"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:hint="@string/nameD"
+            android:textColorHint="@color/white"
+            android:padding="5dp"
+            android:inputType="text"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:layout_marginStart="18dp"
+            android:textColor="@color/black"
+            android:text="@string/phoneD"
+            />
+
+        <EditText
+            android:id="@+id/phoneD"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@drawable/rounded_background"
+            android:textColor="@color/black"
+            android:hint="@string/phoneD"
+            android:textColorHint="@color/white"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="10dp"
+            android:padding="5dp"
+            android:inputType="phone"
+            />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/saveBtnD"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:backgroundTint="@color/slate900"
+        android:text="@string/SaveBtn"
+        android:textSize="20sp"
+        android:textColor="@color/slate300"
+        android:layout_marginHorizontal="10dp"
+        app:cornerRadius="8dp" />
+
+</LinearLayout>
