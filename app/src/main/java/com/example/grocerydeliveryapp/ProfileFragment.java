@@ -28,7 +28,7 @@ public class ProfileFragment extends Fragment {
 
   public FirebaseAuth firebaseAuth;
   public TextView account;
-  public Button logout,orders,details;
+  public Button logout,orders,details,password;
 
   public ProfileFragment() {
     // Required empty public constructor
@@ -54,6 +54,7 @@ public class ProfileFragment extends Fragment {
     logout = (Button) view.findViewById(R.id.logoutBtn);
     orders = (Button) view.findViewById(R.id.ordersBtn);
     details = (Button) view.findViewById(R.id.detailsBtn);
+    password = (Button) view.findViewById(R.id.passwordBtn);
 
     String email = firebaseAuth.getCurrentUser().getEmail();
 
@@ -63,6 +64,14 @@ public class ProfileFragment extends Fragment {
       @Override
       public void onClick(View view) {
         Intent intent = new Intent(getActivity(), UserDetails.class);
+        startActivity(intent);
+      }
+    });
+
+    password.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Intent intent = new Intent(getActivity(), ChangePassword.class);
         startActivity(intent);
       }
     });
