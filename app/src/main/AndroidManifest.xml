@@ -13,6 +13,9 @@
         android:theme="@style/Theme.GroceryDeliveryApp"
         tools:targetApi="31">
         <activity
+            android:name=".AddPhoneActivity"
+            android:exported="false" />
+        <activity
             android:name=".ChangePassword"
             android:exported="false" />
         <activity
