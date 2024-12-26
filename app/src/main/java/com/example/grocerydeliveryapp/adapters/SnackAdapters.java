@@ -11,18 +11,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.grocerydeliveryapp.R;
-import com.example.grocerydeliveryapp.models.GroceryModel;
+import com.example.grocerydeliveryapp.models.SnackModel;
 
 import java.util.List;
 
-public class GroceryKitchenAdapters extends RecyclerView.Adapter<GroceryKitchenAdapters.ViewHolder> {
+public class SnackAdapters extends RecyclerView.Adapter<SnackAdapters.ViewHolder> {
 
   private Context context;
-  private List<GroceryModel> groceryKitchenList;
+  private List<SnackModel> snackList;
 
-  public GroceryKitchenAdapters(Context context, List<GroceryModel> groceryKitchenList) {
+  public SnackAdapters(Context context, List<SnackModel> snackList) {
     this.context = context;
-    this.groceryKitchenList = groceryKitchenList;
+    this.snackList = snackList;
   }
 
   @NonNull
@@ -35,10 +35,10 @@ public class GroceryKitchenAdapters extends RecyclerView.Adapter<GroceryKitchenA
   @Override
   public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
     // Get the current item at the given position
-    GroceryModel currentItem = groceryKitchenList.get(position);
+    SnackModel currentItem = snackList.get(position);
 
     // Set the image resource and name for the current item
-    holder.kitchenImg.setImageResource(getImageResource(currentItem.getImageUrl1()));
+    holder.snackImg.setImageResource(getImageResource(currentItem.getImageUrl1()));
     holder.name.setText(currentItem.getName());
   }
 
@@ -50,19 +50,19 @@ public class GroceryKitchenAdapters extends RecyclerView.Adapter<GroceryKitchenA
   @Override
   public int getItemCount() {
     // Return the number of items in the list
-    return groceryKitchenList.size();
+    return snackList.size();
   }
 
   // ViewHolder class to hold references to the views for each item
   public static class ViewHolder extends RecyclerView.ViewHolder {
-    ImageView kitchenImg;
+    ImageView snackImg;
     TextView name;
 
     public ViewHolder(@NonNull View itemView) {
       super(itemView);
 
       // Initialize the ImageView and TextView references
-      kitchenImg = itemView.findViewById(R.id.categoryImg);
+      snackImg = itemView.findViewById(R.id.categoryImg);
       name = itemView.findViewById(R.id.categoryName);
     }
   }

@@ -9,10 +9,12 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.grocerydeliveryapp.adapters.GroceryKitchenAdapters;
+import com.example.grocerydeliveryapp.adapters.GroceryAdapters;
 import com.example.grocerydeliveryapp.adapters.PopularAdapters;
+import com.example.grocerydeliveryapp.adapters.SnackAdapters;
 import com.example.grocerydeliveryapp.models.GroceryModel;
 import com.example.grocerydeliveryapp.models.PopularModel;
+import com.example.grocerydeliveryapp.models.SnackModel; // Assuming you have a SnackModel class
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -34,8 +36,12 @@ public class HomeFragment extends Fragment {
   PopularAdapters popularAdapters;
 
   List<GroceryModel> groceryKitchens;
-  GroceryKitchenAdapters groceryKitchenAdapters;
-  RecyclerView PopRecyclerView, GroceryRecyclerView;
+  GroceryAdapters groceryKitchenAdapters;
+
+  List<SnackModel> snackList; // List to hold snack items
+  SnackAdapters snackAdapters; // Adapter for snack items
+
+  RecyclerView PopRecyclerView, GroceryRecyclerView, SnackRecyclerView; // Added SnackRecyclerView
 
   public HomeFragment() {
     // Required empty public constructor
@@ -56,22 +62,28 @@ public class HomeFragment extends Fragment {
     // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-    // Initialize RecyclerView
+    // Initialize RecyclerViews
     PopRecyclerView = view.findViewById(R.id.popularRec);
     GroceryRecyclerView = view.findViewById(R.id.GroceryKitchenRec);
+    SnackRecyclerView = view.findViewById(R.id.SnackRec); // Assuming you have added a SnackRecyclerView in your XML
 
     PopRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
     GroceryRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+    SnackRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
-    // Load data and set the adapter
+    // Load data for each section
     popularModelList = loadItemsFromJson("popularItems.json", new TypeToken<List<PopularModel>>() {}.getType());
     groceryKitchens = loadItemsFromJson("groceryItems.json", new TypeToken<List<GroceryModel>>() {}.getType());
+    snackList = loadItemsFromJson("snackItems.json", new TypeToken<List<SnackModel>>() {}.getType()); // Loading snack items
 
+    // Set adapters
     popularAdapters = new PopularAdapters(getActivity(), popularModelList);
-    groceryKitchenAdapters = new GroceryKitchenAdapters(getActivity(), groceryKitchens);
+    groceryKitchenAdapters = new GroceryAdapters(getActivity(), groceryKitchens);
+    snackAdapters = new SnackAdapters(getActivity(), snackList); // Initialize SnackAdapter
 
     PopRecyclerView.setAdapter(popularAdapters);
     GroceryRecyclerView.setAdapter(groceryKitchenAdapters);
+    SnackRecyclerView.setAdapter(snackAdapters); // Set SnackAdapter
 
     return view;
   }
