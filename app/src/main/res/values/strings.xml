@@ -19,7 +19,8 @@
     <!--  Home page Strings  -->
     <string name="search">Search</string>
     <string name="Popular">Popular Products</string>
-    <string name="ViewAll">View all</string>
+    <string name="GroceryKitchen">Grocery &amp; Kitchen</string>
+    <string name="SnacksDrinks">Snacks &amp; Drinks</string>
 
     <!--  Edit Details  -->
     <string name="nameD">Name:</string>

@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Chips & Namkeen",
+    "imageUrl1": "drinks_coke"
+  },
+  {
+    "name": "Sweets & Chocolates",
+    "imageUrl1": "@drawable/coke"
+  },
+  {
+    "name": "Drinks & Juices",
+    "imageUrl1": "@drawable/coke"
+  },
+  {
+    "name": "Tea, Coffee & Milk",
+    "imageUrl1": "@drawable/coke"
+  },
+  {
+    "name": "Instant Food",
+    "imageUrl1": "@drawable/coke"
+  },
+  {
+    "name": "Ice Cream & More",
+    "imageUrl1": "@drawable/coke"
+  }
+]

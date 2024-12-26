@@ -1,17 +1,20 @@
 package com.example.grocerydeliveryapp;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.grocerydeliveryapp.adapters.GroceryAdapters;
 import com.example.grocerydeliveryapp.adapters.PopularAdapters;
+import com.example.grocerydeliveryapp.adapters.SnackAdapters;
+import com.example.grocerydeliveryapp.models.GroceryModel;
 import com.example.grocerydeliveryapp.models.PopularModel;
+import com.example.grocerydeliveryapp.models.SnackModel; // Assuming you have a SnackModel class
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -31,7 +34,14 @@ public class HomeFragment extends Fragment {
 
   List<PopularModel> popularModelList;
   PopularAdapters popularAdapters;
-  RecyclerView recyclerView;
+
+  List<GroceryModel> groceryKitchens;
+  GroceryAdapters groceryKitchenAdapters;
+
+  List<SnackModel> snackList; // List to hold snack items
+  SnackAdapters snackAdapters; // Adapter for snack items
+
+  RecyclerView PopRecyclerView, GroceryRecyclerView, SnackRecyclerView; // Added SnackRecyclerView
 
   public HomeFragment() {
     // Required empty public constructor
@@ -52,34 +62,50 @@ public class HomeFragment extends Fragment {
     // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-    // Initialize RecyclerView
-    recyclerView = view.findViewById(R.id.popularRec);
-    recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false));
+    // Initialize RecyclerViews
+    PopRecyclerView = view.findViewById(R.id.popularRec);
+    GroceryRecyclerView = view.findViewById(R.id.GroceryKitchenRec);
+    SnackRecyclerView = view.findViewById(R.id.SnackRec); // Assuming you have added a SnackRecyclerView in your XML
 
-    // Load data and set the adapter
-    popularModelList = loadItemsFromJson();
-    popularAdapters = new PopularAdapters(getActivity(),popularModelList);
-    recyclerView.setAdapter(popularAdapters);
+    PopRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+    GroceryRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+    SnackRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+
+    // Load data for each section
+    popularModelList = loadItemsFromJson("popularItems.json", new TypeToken<List<PopularModel>>() {}.getType());
+    groceryKitchens = loadItemsFromJson("groceryItems.json", new TypeToken<List<GroceryModel>>() {}.getType());
+    snackList = loadItemsFromJson("snackItems.json", new TypeToken<List<SnackModel>>() {}.getType()); // Loading snack items
+
+    // Set adapters
+    popularAdapters = new PopularAdapters(getActivity(), popularModelList);
+    groceryKitchenAdapters = new GroceryAdapters(getActivity(), groceryKitchens);
+    snackAdapters = new SnackAdapters(getActivity(), snackList); // Initialize SnackAdapter
+
+    PopRecyclerView.setAdapter(popularAdapters);
+    GroceryRecyclerView.setAdapter(groceryKitchenAdapters);
+    SnackRecyclerView.setAdapter(snackAdapters); // Set SnackAdapter
 
     return view;
   }
 
-  private List<PopularModel> loadItemsFromJson() {
-    List<PopularModel> items = new ArrayList<>();
+  // Generic method to load items from JSON based on the model type
+  private <T> List<T> loadItemsFromJson(String fileName, Type typeOfT) {
+    List<T> items = new ArrayList<>();
     try {
-      InputStream inputStream = requireContext().getAssets().open("popularItems.json");
+      // Open the JSON file from the assets
+      InputStream inputStream = requireContext().getAssets().open(fileName);
       String json = convertStreamToString(inputStream);
 
+      // Use Gson to parse the JSON into a list of the provided type
       Gson gson = new Gson();
-      Type listType = new TypeToken<List<PopularModel>>() {}.getType();
-      items = gson.fromJson(json, listType);
+      items = gson.fromJson(json, typeOfT);
     } catch (Exception e) {
       e.printStackTrace();
     }
     return items;
   }
 
-
+  // Convert InputStream to String
   private String convertStreamToString(InputStream is) {
     Scanner scanner = new Scanner(is);
     StringBuilder stringBuilder = new StringBuilder();
