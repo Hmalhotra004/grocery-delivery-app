@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Vegetables & Fruits",
+    "imageUrl1": "drinks_coke"
+  },
+  {
+    "name": "Atta, Rice & Dal",
+    "imageUrl1": "@drawable/coke"
+  },
+  {
+    "name": "Oil, Ghee & Masala",
+    "imageUrl1": "@drawable/coke"
+  },
+  {
+    "name": "Dairy, Bread & Eggs",
+    "imageUrl1": "@drawable/coke"
+  },
+  {
+    "name": "Bakery & Biscuits",
+    "imageUrl1": "@drawable/coke"
+  },
+  {
+    "name": "Dry Fruits & Cereals",
+    "imageUrl1": "@drawable/coke"
+  },
+  {
+    "name": "Chicken Meat & Fish",
+    "imageUrl1": "@drawable/coke"
+  }
+]
