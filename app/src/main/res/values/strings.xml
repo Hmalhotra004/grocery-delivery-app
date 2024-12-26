@@ -8,6 +8,7 @@
     <string name="logoutBtn">Log out</string>
     <string name="ordersBtn">Your Orders</string>
     <string name="DetailsBtn">Edit Details</string>
+    <string name="ChangePass">Change Password</string>
     <string name="passwordBtn">Change Password</string>
     <string name="addPhone">Add Phone Number</string>
 
@@ -23,6 +24,11 @@
     <!--  Edit Details  -->
     <string name="nameD">Name:</string>
     <string name="phoneD">Phone:</string>
+
+    <!--  Edit Password  -->
+    <string name="oldPass">Old:</string>
+    <string name="newPass">New:</string>
+    <string name="confirmPass">Confirm:</string>
 
     <string name="SaveBtn">Save</string>
     <string name="AddBtn">Add</string>
