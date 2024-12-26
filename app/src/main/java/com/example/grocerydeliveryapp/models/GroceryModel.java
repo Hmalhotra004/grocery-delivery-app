@@ -1,10 +1,10 @@
 package com.example.grocerydeliveryapp.models;
 
-public class GroceryKitchen {
+public class GroceryModel {
   private String name;
   private String imageUrl1;
 
-  public GroceryKitchen(String name, String imageUrl1) {
+  public GroceryModel(String name, String imageUrl1) {
     this.name = name;
     this.imageUrl1 = imageUrl1;
   }

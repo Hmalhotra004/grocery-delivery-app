@@ -7,12 +7,11 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.grocerydeliveryapp.adapters.GroceryKitchenAdapters;
 import com.example.grocerydeliveryapp.adapters.PopularAdapters;
-import com.example.grocerydeliveryapp.models.GroceryKitchen;
+import com.example.grocerydeliveryapp.models.GroceryModel;
 import com.example.grocerydeliveryapp.models.PopularModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -34,7 +33,7 @@ public class HomeFragment extends Fragment {
   List<PopularModel> popularModelList;
   PopularAdapters popularAdapters;
 
-  List<GroceryKitchen> groceryKitchens;
+  List<GroceryModel> groceryKitchens;
   GroceryKitchenAdapters groceryKitchenAdapters;
   RecyclerView PopRecyclerView, GroceryRecyclerView;
 
@@ -66,7 +65,7 @@ public class HomeFragment extends Fragment {
 
     // Load data and set the adapter
     popularModelList = loadItemsFromJson("popularItems.json", new TypeToken<List<PopularModel>>() {}.getType());
-    groceryKitchens = loadItemsFromJson("groceryItems.json", new TypeToken<List<GroceryKitchen>>() {}.getType());
+    groceryKitchens = loadItemsFromJson("groceryItems.json", new TypeToken<List<GroceryModel>>() {}.getType());
 
     popularAdapters = new PopularAdapters(getActivity(), popularModelList);
     groceryKitchenAdapters = new GroceryKitchenAdapters(getActivity(), groceryKitchens);

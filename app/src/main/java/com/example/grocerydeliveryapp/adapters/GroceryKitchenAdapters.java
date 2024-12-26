@@ -11,16 +11,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.grocerydeliveryapp.R;
-import com.example.grocerydeliveryapp.models.GroceryKitchen;
+import com.example.grocerydeliveryapp.models.GroceryModel;
 
 import java.util.List;
 
 public class GroceryKitchenAdapters extends RecyclerView.Adapter<GroceryKitchenAdapters.ViewHolder> {
 
   private Context context;
-  private List<GroceryKitchen> groceryKitchenList;
+  private List<GroceryModel> groceryKitchenList;
 
-  public GroceryKitchenAdapters(Context context, List<GroceryKitchen> groceryKitchenList) {
+  public GroceryKitchenAdapters(Context context, List<GroceryModel> groceryKitchenList) {
     this.context = context;
     this.groceryKitchenList = groceryKitchenList;
   }
@@ -35,7 +35,7 @@ public class GroceryKitchenAdapters extends RecyclerView.Adapter<GroceryKitchenA
   @Override
   public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
     // Get the current item at the given position
-    GroceryKitchen currentItem = groceryKitchenList.get(position);
+    GroceryModel currentItem = groceryKitchenList.get(position);
 
     // Set the image resource and name for the current item
     holder.kitchenImg.setImageResource(getImageResource(currentItem.getImageUrl1()));
