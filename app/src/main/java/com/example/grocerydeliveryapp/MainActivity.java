@@ -33,11 +33,9 @@ public class MainActivity extends AppCompatActivity {
     setContentView(binding.getRoot());
     replaceFragment(new HomeFragment());
 
-    // Initialize FirebaseAuth and Firestore
     firebaseAuth = FirebaseAuth.getInstance();
     firestore = FirebaseFirestore.getInstance();
 
-    // Check if user is logged in
     FirebaseUser currentUser = firebaseAuth.getCurrentUser();
     if (currentUser == null) {
       startActivity(new Intent(MainActivity.this, LoginActivity.class));
@@ -45,28 +43,24 @@ public class MainActivity extends AppCompatActivity {
       return;
     }
 
-    // Check if user has a phone number
     String userId = currentUser.getUid();
     DocumentReference userRef = firestore.collection("users").document(userId);
     userRef.get().addOnSuccessListener(documentSnapshot -> {
       if (documentSnapshot.exists()) {
         String userPhone = documentSnapshot.getString("phone");
 
-        // Redirect to AddPhoneActivity if phone number is missing
         if (userPhone == null || userPhone.isEmpty()) {
           Intent intent = new Intent(MainActivity.this, AddPhoneActivity.class);
           startActivity(intent);
           finish();
         }
       } else {
-        // If no document exists, redirect to AddPhoneActivity
-        Intent intent = new Intent(MainActivity.this, AddPhoneActivity.class);
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
       }
     }).addOnFailureListener(e -> {
-      // Handle failure to retrieve the document
-      Intent intent = new Intent(MainActivity.this, AddPhoneActivity.class);
+      Intent intent = new Intent(MainActivity.this, LoginActivity.class);
       startActivity(intent);
       finish();
     });
@@ -88,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
       return true;
     });
 
-    // Handle window insets for edge-to-edge layout
     ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
       Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
       v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
