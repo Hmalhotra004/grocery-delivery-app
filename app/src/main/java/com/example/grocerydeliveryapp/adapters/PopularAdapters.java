@@ -1,6 +1,7 @@
 package com.example.grocerydeliveryapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.grocerydeliveryapp.R;
+import com.example.grocerydeliveryapp.ViewAllActivity;
 import com.example.grocerydeliveryapp.models.PopularModel;
 
 import java.util.List;
@@ -45,6 +47,14 @@ public class PopularAdapters extends RecyclerView.Adapter<PopularAdapters.ViewHo
 
     // Set the name of the item
     holder.name.setText(currentItem.getName());
+
+    holder.itemView.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        Intent intent = new Intent(context, ViewAllActivity.class);
+        context.startActivity(intent);
+      }
+    });
   }
 
   private int getImageResource(String imageName) {
