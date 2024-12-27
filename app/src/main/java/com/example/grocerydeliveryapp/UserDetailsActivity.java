@@ -20,7 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UserDetails extends AppCompatActivity {
+public class UserDetailsActivity extends AppCompatActivity {
 
   public Button save;
   public EditText name, phone;
@@ -71,12 +71,12 @@ public class UserDetails extends AppCompatActivity {
         String updatedPhone = phone.getText().toString().trim();
 
         if (updatedName.isEmpty() || updatedPhone.isEmpty()) {
-          Toast.makeText(UserDetails.this, "Fields cannot be empty", Toast.LENGTH_SHORT).show();
+          Toast.makeText(UserDetailsActivity.this, "Fields cannot be empty", Toast.LENGTH_SHORT).show();
           return;
         }
 
         if (!updatedPhone.matches("\\d{10}")) {
-          Toast.makeText(UserDetails.this, "Phone number must be exactly 10 digits", Toast.LENGTH_SHORT).show();
+          Toast.makeText(UserDetailsActivity.this, "Phone number must be exactly 10 digits", Toast.LENGTH_SHORT).show();
           return;
         }
 
@@ -86,11 +86,11 @@ public class UserDetails extends AppCompatActivity {
 
         userRef.update(updatedData)
           .addOnSuccessListener(aVoid -> {
-            Toast.makeText(UserDetails.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
+            Toast.makeText(UserDetailsActivity.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
           })
           .addOnFailureListener(e -> {
             Log.e("UserDetails", "Error updating document", e);
-            Toast.makeText(UserDetails.this, "Failed to update profile", Toast.LENGTH_SHORT).show();
+            Toast.makeText(UserDetailsActivity.this, "Failed to update profile", Toast.LENGTH_SHORT).show();
           });
       });
     }

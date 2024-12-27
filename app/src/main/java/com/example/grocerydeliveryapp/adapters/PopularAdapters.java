@@ -1,6 +1,7 @@
 package com.example.grocerydeliveryapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.grocerydeliveryapp.R;
+import com.example.grocerydeliveryapp.ViewAllActivity;
 import com.example.grocerydeliveryapp.models.PopularModel;
 
 import java.util.List;
@@ -45,6 +47,18 @@ public class PopularAdapters extends RecyclerView.Adapter<PopularAdapters.ViewHo
 
     // Set the name of the item
     holder.name.setText(currentItem.getName());
+
+    holder.itemView.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        String CurrentName = currentItem.getName();
+        String file = checkItem(CurrentName);
+        Intent intent = new Intent(context, ViewAllActivity.class);
+        intent.putExtra("file", file);
+        intent.putExtra("title", currentItem.getName());
+        context.startActivity(intent);
+      }
+    });
   }
 
   private int getImageResource(String imageName) {
@@ -74,4 +88,42 @@ public class PopularAdapters extends RecyclerView.Adapter<PopularAdapters.ViewHo
       name = itemView.findViewById(R.id.popName);
     }
   }
+
+  private String checkItem(String name) {
+    String file;
+
+    switch (name) {
+      case "Drinks & Juices":
+        file = "drinks.json";
+        break;
+
+      case "Chips & Namkeen":
+        file = "chips.json";
+        break;
+
+      case "Dairy, Bread & Eggs":
+        file = "dairy.json";
+        break;
+
+      case "Bakery & Biscuits":
+        file = "bakery.json";
+        break;
+
+
+      case "Vegetables & Fruits":
+        file = "fruits.json";
+        break;
+
+      case "Sweets & Chocolates":
+        file = "choco.json";
+        break;
+
+      default:
+        file = "Default.json";
+        break;
+    }
+
+    return file;
+  }
+
 }

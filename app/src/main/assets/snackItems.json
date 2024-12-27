@@ -1,15 +1,15 @@
 [
   {
     "name": "Chips & Namkeen",
-    "imageUrl1": "drinks_coke"
+    "imageUrl1": "chips_kurkure"
   },
   {
     "name": "Sweets & Chocolates",
-    "imageUrl1": "@drawable/coke"
+    "imageUrl1": "choco_kitkat"
   },
   {
     "name": "Drinks & Juices",
-    "imageUrl1": "@drawable/coke"
+    "imageUrl1": "drinks_real"
   },
   {
     "name": "Tea, Coffee & Milk",
@@ -21,6 +21,6 @@
   },
   {
     "name": "Ice Cream & More",
-    "imageUrl1": "@drawable/coke"
+    "imageUrl1": "ice_amul"
   }
 ]

@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
       } else if (id == R.id.user) {
         replaceFragment(new ProfileFragment());
       } else if (id == R.id.orders) {
-        replaceFragment(new ordersFragment());
+        replaceFragment(new OrdersFragment());
       } else if (id == R.id.cart) {
         replaceFragment(new CartFragment());
       } else {

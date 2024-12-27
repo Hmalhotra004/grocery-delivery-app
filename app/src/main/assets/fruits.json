@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Apple",
+    "price": 55,
+    "imageUrl": "fruit_apple"
+  },
+  {
+    "name": "garlic",
+    "price": 55,
+    "imageUrl": "fruit_garlic"
+  },
+  {
+    "name": "Tomato",
+    "price": 55,
+    "imageUrl": "fruit_tomato"
+  },
+  {
+    "name": "Onion",
+    "price": 55,
+    "imageUrl": "fruit_onion"
+  }
+]

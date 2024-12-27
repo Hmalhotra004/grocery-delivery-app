@@ -17,7 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 
-public class ChangePassword extends AppCompatActivity {
+public class ChangePasswordActivity extends AppCompatActivity {
 
   public Button save;
   public EditText old, newP, confirmP;
@@ -47,12 +47,12 @@ public class ChangePassword extends AppCompatActivity {
       String confirmPassword = confirmP.getText().toString().trim();
 
       if (oldPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
-        Toast.makeText(ChangePassword.this, "All fields are required", Toast.LENGTH_SHORT).show();
+        Toast.makeText(ChangePasswordActivity.this, "All fields are required", Toast.LENGTH_SHORT).show();
         return;
       }
 
       if (!newPassword.equals(confirmPassword)) {
-        Toast.makeText(ChangePassword.this, "New password and confirm password do not match", Toast.LENGTH_SHORT).show();
+        Toast.makeText(ChangePasswordActivity.this, "New password and confirm password do not match", Toast.LENGTH_SHORT).show();
         return;
       }
 
@@ -66,20 +66,20 @@ public class ChangePassword extends AppCompatActivity {
             // Update the password
             user.updatePassword(newPassword).addOnCompleteListener(updateTask -> {
               if (updateTask.isSuccessful()) {
-                Toast.makeText(ChangePassword.this, "Password updated successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChangePasswordActivity.this, "Password updated successfully", Toast.LENGTH_SHORT).show();
                 finish(); // Close the activity
               } else {
-                Toast.makeText(ChangePassword.this, "Failed to update password", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ChangePasswordActivity.this, "Failed to update password", Toast.LENGTH_SHORT).show();
                 Log.e("ChangePassword", "Error updating password", updateTask.getException());
               }
             });
           } else {
-            Toast.makeText(ChangePassword.this, "Old password is incorrect", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ChangePasswordActivity.this, "Old password is incorrect", Toast.LENGTH_SHORT).show();
             Log.e("ChangePassword", "Re-authentication failed", task.getException());
           }
         });
       } else {
-        Toast.makeText(ChangePassword.this, "User not authenticated", Toast.LENGTH_SHORT).show();
+        Toast.makeText(ChangePasswordActivity.this, "User not authenticated", Toast.LENGTH_SHORT).show();
       }
     });
   }
