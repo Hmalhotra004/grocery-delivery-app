@@ -78,7 +78,7 @@ public class ProfileFragment extends Fragment {
       public void onClick(View view) {
         FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frame_layout, new ordersFragment());
+        fragmentTransaction.replace(R.id.frame_layout, new OrdersFragment());
         fragmentTransaction.commit();
 
         // Update the bottom navigation selection
