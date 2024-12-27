@@ -1,0 +1,22 @@
+[
+  {
+    "name": "Coke",
+    "price": 55,
+    "imageUrl": "drinks_coke"
+  },
+  {
+    "name": "Prime",
+    "price": 55,
+    "imageUrl": "drinks_prime"
+  },
+  {
+    "name": "7 Up",
+    "price": 55,
+    "imageUrl": "drinks_up7"
+  },
+  {
+    "name": "real",
+    "price": 55,
+    "imageUrl": "drinks_real"
+  }
+]

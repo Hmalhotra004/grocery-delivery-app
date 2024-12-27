@@ -94,11 +94,28 @@ public class PopularAdapters extends RecyclerView.Adapter<PopularAdapters.ViewHo
 
     switch (name) {
       case "Drinks & Juices":
-        file = "Drinks.json";
+        file = "drinks.json";
         break;
+
+      case "Chips & Namkeen":
+        file = "chips.json";
+        break;
+
+      case "Dairy, Bread & Eggs":
+        file = "dairy.json";
+        break;
+
+      case "Bakery & Biscuits":
+        file = "bakery.json";
+        break;
+
 
       case "Vegetables & Fruits":
         file = "fruits.json";
+        break;
+
+      case "Sweets & Chocolates":
+        file = "choco.json";
         break;
 
       default:
