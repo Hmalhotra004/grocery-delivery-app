@@ -4,11 +4,22 @@ public class ViewAllModel {
   private String name;
   private int price;
   private String imageUrl;
+  private String amt;
 
-  public ViewAllModel(String name, int price, String imageUrl) {
+
+  public ViewAllModel(String name, int price, String imageUrl,String amt) {
     this.name = name;
     this.price = price;
     this.imageUrl = imageUrl;
+    this.amt = amt;
+  }
+
+  public String getAmt() {
+    return amt;
+  }
+
+  public void setAmt(String amt) {
+    this.amt = amt;
   }
 
   public String getName() {

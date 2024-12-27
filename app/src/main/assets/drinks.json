@@ -1,22 +1,32 @@
 [
   {
-    "name": "Coke",
-    "price": 55,
-    "imageUrl": "drinks_coke"
+    "name": "Red Bull",
+    "price": 250,
+    "amt": "5 x 55ml",
+    "imageUrl": "drinks_red"
   },
   {
     "name": "Prime",
-    "price": 55,
+    "price": 455,
+    "amt": "150ml",
     "imageUrl": "drinks_prime"
   },
   {
     "name": "7 Up",
     "price": 55,
+    "amt": "150ml",
     "imageUrl": "drinks_up7"
   },
   {
-    "name": "real",
+    "name": "Real Mixed Fruit",
     "price": 55,
+    "amt": "100ml",
     "imageUrl": "drinks_real"
+  },
+  {
+    "name": "Coke",
+    "price": 55,
+    "amt": "100ml",
+    "imageUrl": "drinks_coke"
   }
 ]

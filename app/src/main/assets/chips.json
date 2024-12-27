@@ -1,22 +1,32 @@
 [
   {
-    "name": "Coke",
-    "price": 55,
-    "imageUrl": "drinks_coke"
+    "name": "Too Yum",
+    "price": 35,
+    "amt": "75g",
+    "imageUrl": "chips_yum"
   },
   {
-    "name": "Prime",
-    "price": 55,
-    "imageUrl": "drinks_prime"
+    "name": "Haldiram's Moong Dal",
+    "price": 45,
+    "amt": "75g",
+    "imageUrl": "chips_moong"
   },
   {
-    "name": "7 Up",
+    "name": "Kurkure",
     "price": 55,
-    "imageUrl": "drinks_up7"
+    "amt": "75g",
+    "imageUrl": "chips_kurkure"
   },
   {
-    "name": "real",
+    "name": "Doritos",
     "price": 55,
-    "imageUrl": "drinks_real"
+    "amt": "75g",
+    "imageUrl": "chips_doritos"
+  },
+  {
+    "name": "Lays (Blue)",
+    "price": 55,
+    "amt": "75g",
+    "imageUrl": "chips_lays"
   }
 ]

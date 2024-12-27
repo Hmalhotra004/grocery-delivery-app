@@ -13,11 +13,11 @@
   },
   {
     "name": "Tea, Coffee & Milk",
-    "imageUrl1": "@drawable/coke"
+    "imageUrl1": "tea_taj"
   },
   {
     "name": "Instant Food",
-    "imageUrl1": "@drawable/coke"
+    "imageUrl1": "ins_mag"
   },
   {
     "name": "Ice Cream & More",

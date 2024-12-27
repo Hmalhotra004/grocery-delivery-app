@@ -5,7 +5,7 @@
   },
   {
     "name": "Atta, Rice & Dal",
-    "imageUrl1": "@drawable/coke"
+    "imageUrl1": "aata_aata"
   },
   {
     "name": "Dairy, Bread & Eggs",
@@ -17,10 +17,10 @@
   },
   {
     "name": "Dry Fruits & Cereals",
-    "imageUrl1": "@drawable/coke"
+    "imageUrl1": "dry_oats"
   },
   {
     "name": "Chicken Meat & Fish",
-    "imageUrl1": "@drawable/coke"
+    "imageUrl1": "chick_sa"
   }
 ]
