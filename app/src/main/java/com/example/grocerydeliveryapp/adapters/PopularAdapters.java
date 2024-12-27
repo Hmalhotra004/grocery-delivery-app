@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.grocerydeliveryapp.R;
 import com.example.grocerydeliveryapp.ViewAllActivity;
 import com.example.grocerydeliveryapp.models.PopularModel;
+import com.example.grocerydeliveryapp.utils.CheckItem;
 
 import java.util.List;
 
@@ -51,8 +52,8 @@ public class PopularAdapters extends RecyclerView.Adapter<PopularAdapters.ViewHo
     holder.itemView.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        String CurrentName = currentItem.getName();
-        String file = checkItem(CurrentName);
+        int CurrentItem = currentItem.getId();
+        String file = CheckItem.getFile(CurrentItem);
         Intent intent = new Intent(context, ViewAllActivity.class);
         intent.putExtra("file", file);
         intent.putExtra("title", currentItem.getName());
@@ -89,41 +90,6 @@ public class PopularAdapters extends RecyclerView.Adapter<PopularAdapters.ViewHo
     }
   }
 
-  private String checkItem(String name) {
-    String file;
 
-    switch (name) {
-      case "Drinks & Juices":
-        file = "drinks.json";
-        break;
-
-      case "Chips & Namkeen":
-        file = "chips.json";
-        break;
-
-      case "Dairy, Bread & Eggs":
-        file = "dairy.json";
-        break;
-
-      case "Bakery & Biscuits":
-        file = "bakery.json";
-        break;
-
-
-      case "Vegetables & Fruits":
-        file = "fruits.json";
-        break;
-
-      case "Sweets & Chocolates":
-        file = "choco.json";
-        break;
-
-      default:
-        file = "Default.json";
-        break;
-    }
-
-    return file;
-  }
 
 }

@@ -1,5 +1,6 @@
 [
   {
+    "id": 9,
     "name": "Drinks & Juices",
     "imageUrl1": "drinks_coke",
     "imageUrl2": "drinks_real",
@@ -7,6 +8,7 @@
     "imageUrl4": "drinks_prime"
   },
   {
+    "id": 7,
     "name": "Chips & Namkeen",
     "imageUrl1": "chips_lays",
     "imageUrl2": "chips_kurkure",
@@ -14,6 +16,7 @@
     "imageUrl4": "chips_moong"
   },
   {
+    "id": 3,
     "name": "Dairy, Bread & Eggs",
     "imageUrl1": "diary_milk",
     "imageUrl2": "diary_milk1",
@@ -21,6 +24,7 @@
     "imageUrl4": "diary_eggs"
   },
   {
+    "id": 4,
     "name": "Bakery & Biscuits",
     "imageUrl1": "bakery_black",
     "imageUrl2": "bakery_choco",
@@ -28,6 +32,7 @@
     "imageUrl4": "bakery_hide"
   },
   {
+    "id": 1,
     "name": "Vegetables & Fruits",
     "imageUrl1": "fruit_apple",
     "imageUrl2": "fruit_garlic",
@@ -35,6 +40,7 @@
     "imageUrl4": "fruit_onion"
   },
   {
+    "id": 8,
     "name": "Sweets & Chocolates",
     "imageUrl1": "choco_kitkat",
     "imageUrl2": "choco_silk",

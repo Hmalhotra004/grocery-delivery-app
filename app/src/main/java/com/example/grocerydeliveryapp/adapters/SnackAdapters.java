@@ -1,6 +1,7 @@
 package com.example.grocerydeliveryapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.grocerydeliveryapp.R;
+import com.example.grocerydeliveryapp.ViewAllActivity;
 import com.example.grocerydeliveryapp.models.SnackModel;
+import com.example.grocerydeliveryapp.utils.CheckItem;
 
 import java.util.List;
 
@@ -40,6 +43,18 @@ public class SnackAdapters extends RecyclerView.Adapter<SnackAdapters.ViewHolder
     // Set the image resource and name for the current item
     holder.snackImg.setImageResource(getImageResource(currentItem.getImageUrl1()));
     holder.name.setText(currentItem.getName());
+
+    holder.itemView.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        int CurrentItem = currentItem.getId();
+        String file = CheckItem.getFile(CurrentItem);
+        Intent intent = new Intent(context, ViewAllActivity.class);
+        intent.putExtra("file", file);
+        intent.putExtra("title", currentItem.getName());
+        context.startActivity(intent);
+      }
+    });
   }
 
   private int getImageResource(String imageName) {
