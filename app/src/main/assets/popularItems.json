@@ -36,9 +36,9 @@
   },
   {
     "name": "Sweets & Chocolates",
-    "imageUrl1": "@drawable/coke",
-    "imageUrl2": "https://example.com/apple.jpg",
-    "imageUrl3": "https://example.com/apple.jpg",
-    "imageUrl4": "https://example.com/apple.jpg"
+    "imageUrl1": "choco_kitkat",
+    "imageUrl2": "choco_silk",
+    "imageUrl3": "choco_nut",
+    "imageUrl4": "choco_star"
   }
 ]
