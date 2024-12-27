@@ -38,6 +38,7 @@ public class ViewAllAdapters extends RecyclerView.Adapter<ViewAllAdapters.ViewHo
 
     holder.name.setText(currentItem.getName());
     holder.price.setText(String.format("₹%d", currentItem.getPrice()));
+    holder.amt.setText(currentItem.getAmt());
     holder.imageView.setImageResource(getImageResource(currentItem.getImageUrl()));
   }
 
@@ -53,13 +54,14 @@ public class ViewAllAdapters extends RecyclerView.Adapter<ViewAllAdapters.ViewHo
 
   public static class ViewHolder extends RecyclerView.ViewHolder {
     ImageView imageView;
-    TextView name, price;
+    TextView name, price ,amt;
 
     public ViewHolder(@NonNull View itemView) {
       super(itemView);
       imageView = itemView.findViewById(R.id.productImg);
       name = itemView.findViewById(R.id.productName);
       price = itemView.findViewById(R.id.productPrice);
+      amt = itemView.findViewById(R.id.productAmt);
     }
   }
 }
