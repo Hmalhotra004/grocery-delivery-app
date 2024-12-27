@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Cup Noodles Masala",
+    "price": 80,
+    "amt": "100 g",
+    "imageUrl": "ins_cup"
+  },
+  {
+    "name": "Maggi",
+    "price": 50,
+    "amt": "150 g",
+    "imageUrl": "ins_mag"
+  }
+]

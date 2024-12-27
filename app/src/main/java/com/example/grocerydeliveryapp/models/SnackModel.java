@@ -2,11 +2,21 @@ package com.example.grocerydeliveryapp.models;
 
 public class SnackModel {
   private String name;
+  private int id;
   private String imageUrl1;
 
-  public SnackModel(String name, String imageUrl1) {
+  public SnackModel(String name, String imageUrl1,int id) {
     this.name = name;
     this.imageUrl1 = imageUrl1;
+    this.id = id;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 
   public String getName() {

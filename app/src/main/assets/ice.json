@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Amul's Cornetto",
+    "price": 150,
+    "amt": "4 x 45 g",
+    "imageUrl": "ice_cor"
+  },
+  {
+    "name": "Natural's Chocolate Almond",
+    "price": 185,
+    "amt": "250 g",
+    "imageUrl": "ice_nat"
+  },
+  {
+    "name": "Amul's Matka Khulfi",
+    "price": 150,
+    "amt": "200 g",
+    "imageUrl": "ice_matka"
+  },
+  {
+    "name": "Amul's Chocolate Chip",
+    "price": 95,
+    "amt": "2 x 100g",
+    "imageUrl": "ice_amul"
+  }
+]

@@ -2,14 +2,24 @@ package com.example.grocerydeliveryapp.models;
 
 public class PopularModel {
   private String name;
+  private int id;
   private String imageUrl1, imageUrl2, imageUrl3, imageUrl4;
 
-  public PopularModel(String name, String imageUrl1, String imageUrl2, String imageUrl3, String imageUrl4) {
+  public PopularModel(String name, String imageUrl1, String imageUrl2, String imageUrl3, String imageUrl4,int id) {
     this.name = name;
     this.imageUrl1 = imageUrl1;
     this.imageUrl2 = imageUrl2;
     this.imageUrl3 = imageUrl3;
     this.imageUrl4 = imageUrl4;
+    this.id = id;
+  }
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 
   // Getters and Setters

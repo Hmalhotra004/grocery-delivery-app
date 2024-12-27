@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Taj Mahal",
+    "price": 80,
+    "amt": "100 g",
+    "imageUrl": "tea_taj"
+  },
+  {
+    "name": "Nescafe Coffee",
+    "price": 85,
+    "amt": "150 g",
+    "imageUrl": "tea_co"
+  },
+  {
+    "name": "TATA Tea Premium",
+    "price": 250,
+    "amt": "500 g",
+    "imageUrl": "tea_tea"
+  }
+]

@@ -1,25 +1,31 @@
 [
   {
+    "id": 1,
     "name": "Vegetables & Fruits",
     "imageUrl1": "fruit_apple"
   },
   {
+    "id": 2,
     "name": "Atta, Rice & Dal",
     "imageUrl1": "aata_aata"
   },
   {
+    "id": 3,
     "name": "Dairy, Bread & Eggs",
     "imageUrl1": "diary_bread"
   },
   {
+    "id": 4,
     "name": "Bakery & Biscuits",
     "imageUrl1": "bakery_black"
   },
   {
+    "id": 5,
     "name": "Dry Fruits & Cereals",
     "imageUrl1": "dry_oats"
   },
   {
+    "id": 6,
     "name": "Chicken Meat & Fish",
     "imageUrl1": "chick_sa"
   }
