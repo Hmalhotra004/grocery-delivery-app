@@ -1,22 +1,26 @@
 [
   {
-    "name": "Coke",
-    "price": 55,
-    "imageUrl": "drinks_coke"
+    "name": "Lotte Choco Pie",
+    "price": 63,
+    "amt": "150 g",
+    "imageUrl": "bakery_choco"
   },
   {
-    "name": "Prime",
-    "price": 55,
-    "imageUrl": "drinks_prime"
+    "name": "Hide & Seek",
+    "price": 45,
+    "amt": "200 g",
+    "imageUrl": "bakery_hide"
   },
   {
-    "name": "7 Up",
+    "name": "Black Bourbon",
     "price": 55,
-    "imageUrl": "drinks_up7"
+    "amt": "50 g",
+    "imageUrl": "bakery_black"
   },
   {
-    "name": "real",
+    "name": "Dark Fantasy",
     "price": 55,
-    "imageUrl": "drinks_real"
+    "amt": "200 g",
+    "imageUrl": "bakery_dark"
   }
 ]
