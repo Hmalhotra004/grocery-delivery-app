@@ -11,12 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
-
-import org.w3c.dom.Text;
 
 public class ProfileFragment extends Fragment {
 
@@ -63,7 +60,7 @@ public class ProfileFragment extends Fragment {
     details.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        Intent intent = new Intent(getActivity(), UserDetails.class);
+        Intent intent = new Intent(getActivity(), UserDetailsActivity.class);
         startActivity(intent);
       }
     });
@@ -71,7 +68,7 @@ public class ProfileFragment extends Fragment {
     password.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        Intent intent = new Intent(getActivity(), ChangePassword.class);
+        Intent intent = new Intent(getActivity(), ChangePasswordActivity.class);
         startActivity(intent);
       }
     });
