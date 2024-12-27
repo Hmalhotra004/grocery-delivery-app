@@ -51,7 +51,11 @@ public class PopularAdapters extends RecyclerView.Adapter<PopularAdapters.ViewHo
     holder.itemView.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
+        String CurrentName = currentItem.getName();
+        String file = checkItem(CurrentName);
         Intent intent = new Intent(context, ViewAllActivity.class);
+        intent.putExtra("file", file);
+        intent.putExtra("title", currentItem.getName());
         context.startActivity(intent);
       }
     });
@@ -84,4 +88,25 @@ public class PopularAdapters extends RecyclerView.Adapter<PopularAdapters.ViewHo
       name = itemView.findViewById(R.id.popName);
     }
   }
+
+  private String checkItem(String name) {
+    String file;
+
+    switch (name) {
+      case "Drinks & Juices":
+        file = "Drinks.json";
+        break;
+
+      case "Vegetables & Fruits":
+        file = "fruits.json";
+        break;
+
+      default:
+        file = "Default.json";
+        break;
+    }
+
+    return file;
+  }
+
 }

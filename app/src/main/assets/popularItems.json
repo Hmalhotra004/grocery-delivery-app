@@ -8,31 +8,31 @@
   },
   {
     "name": "Chips & Namkeen",
-    "imageUrl1": "@drawable/coke",
-    "imageUrl2": "https://example.com/apple.jpg",
-    "imageUrl3": "https://example.com/apple.jpg",
-    "imageUrl4": "https://example.com/apple.jpg"
+    "imageUrl1": "chips_lays",
+    "imageUrl2": "chips_kurkure",
+    "imageUrl3": "chips_doritos",
+    "imageUrl4": "chips_moong"
   },
   {
     "name": "Dairy, Bread & Eggs",
-    "imageUrl1": "@drawable/coke",
-    "imageUrl2": "https://example.com/apple.jpg",
-    "imageUrl3": "https://example.com/apple.jpg",
-    "imageUrl4": "https://example.com/apple.jpg"
+    "imageUrl1": "diary_milk",
+    "imageUrl2": "diary_milk1",
+    "imageUrl3": "diary_bread",
+    "imageUrl4": "diary_eggs"
   },
   {
     "name": "Bakery & Biscuits",
-    "imageUrl1": "@drawable/coke",
-    "imageUrl2": "https://example.com/apple.jpg",
-    "imageUrl3": "https://example.com/apple.jpg",
-    "imageUrl4": "https://example.com/apple.jpg"
+    "imageUrl1": "bakery_black",
+    "imageUrl2": "bakery_choco",
+    "imageUrl3": "bakery_dark",
+    "imageUrl4": "bakery_hide"
   },
   {
     "name": "Vegetables & Fruits",
-    "imageUrl1": "@drawable/coke",
-    "imageUrl2": "https://example.com/apple.jpg",
-    "imageUrl3": "https://example.com/apple.jpg",
-    "imageUrl4": "https://example.com/apple.jpg"
+    "imageUrl1": "fruit_apple",
+    "imageUrl2": "fruit_garlic",
+    "imageUrl3": "fruit_tomato",
+    "imageUrl4": "fruit_onion"
   },
   {
     "name": "Sweets & Chocolates",

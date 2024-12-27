@@ -3,6 +3,7 @@ package com.example.grocerydeliveryapp;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -26,6 +27,7 @@ public class ViewAllActivity extends AppCompatActivity {
   ViewAllAdapters viewAllAdapters;
 
   RecyclerView viewAllRec;
+  Toolbar title;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -38,11 +40,18 @@ public class ViewAllActivity extends AppCompatActivity {
       return insets;
     });
 
+    String file = getIntent().getStringExtra("file");
+    String pageTitle = getIntent().getStringExtra("title");
+
+    title = findViewById(R.id.viewAlltoolbar);
+    setSupportActionBar(title);
+    getSupportActionBar().setTitle(pageTitle);
+
     viewAllRec = findViewById(R.id.viewAllRec);
     viewAllRec.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
 
     // Load items from JSON file
-    viewAllModelList = loadItemsFromJson("Fruits.json", new TypeToken<List<ViewAllModel>>() {}.getType());
+    viewAllModelList = loadItemsFromJson(file, new TypeToken<List<ViewAllModel>>() {}.getType());
 
     // Set up the RecyclerView adapter
     viewAllAdapters = new ViewAllAdapters(this, viewAllModelList);
