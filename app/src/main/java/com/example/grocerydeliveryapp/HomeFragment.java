@@ -1,10 +1,12 @@
 package com.example.grocerydeliveryapp;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,23 +16,18 @@ import com.example.grocerydeliveryapp.adapters.PopularAdapters;
 import com.example.grocerydeliveryapp.adapters.SnackAdapters;
 import com.example.grocerydeliveryapp.models.GroceryModel;
 import com.example.grocerydeliveryapp.models.PopularModel;
-import com.example.grocerydeliveryapp.models.SnackModel; // Assuming you have a SnackModel class
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.example.grocerydeliveryapp.models.SnackModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
-import java.io.InputStream;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class HomeFragment extends Fragment {
-
-  private static final String ARG_PARAM1 = "param1";
-  private static final String ARG_PARAM2 = "param2";
-
-  private String mParam1;
-  private String mParam2;
 
   List<PopularModel> popularModelList;
   PopularAdapters popularAdapters;
@@ -38,10 +35,12 @@ public class HomeFragment extends Fragment {
   List<GroceryModel> groceryKitchens;
   GroceryAdapters groceryKitchenAdapters;
 
-  List<SnackModel> snackList; // List to hold snack items
-  SnackAdapters snackAdapters; // Adapter for snack items
+  List<SnackModel> snackList;
+  SnackAdapters snackAdapters;
 
-  RecyclerView PopRecyclerView, GroceryRecyclerView, SnackRecyclerView; // Added SnackRecyclerView
+  RecyclerView PopRecyclerView, GroceryRecyclerView, SnackRecyclerView;
+
+  FirebaseFirestore db;
 
   public HomeFragment() {
     // Required empty public constructor
@@ -50,68 +49,95 @@ public class HomeFragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    if (getArguments() != null) {
-      mParam1 = getArguments().getString(ARG_PARAM1);
-      mParam2 = getArguments().getString(ARG_PARAM2);
-    }
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+    db = FirebaseFirestore.getInstance();
 
     // Initialize RecyclerViews
     PopRecyclerView = view.findViewById(R.id.popularRec);
     GroceryRecyclerView = view.findViewById(R.id.GroceryKitchenRec);
-    SnackRecyclerView = view.findViewById(R.id.SnackRec); // Assuming you have added a SnackRecyclerView in your XML
+    SnackRecyclerView = view.findViewById(R.id.SnackRec);
 
     PopRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
     GroceryRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
     SnackRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
-    // Load data for each section
-    popularModelList = loadItemsFromJson("popularItems.json", new TypeToken<List<PopularModel>>() {}.getType());
-    groceryKitchens = loadItemsFromJson("groceryItems.json", new TypeToken<List<GroceryModel>>() {}.getType());
-    snackList = loadItemsFromJson("snackItems.json", new TypeToken<List<SnackModel>>() {}.getType()); // Loading snack items
+    // Initialize adapters
+    popularModelList = new ArrayList<>();
+    groceryKitchens = new ArrayList<>();
+    snackList = new ArrayList<>();
 
-    // Set adapters
     popularAdapters = new PopularAdapters(getActivity(), popularModelList);
     groceryKitchenAdapters = new GroceryAdapters(getActivity(), groceryKitchens);
-    snackAdapters = new SnackAdapters(getActivity(), snackList); // Initialize SnackAdapter
+    snackAdapters = new SnackAdapters(getActivity(), snackList);
 
     PopRecyclerView.setAdapter(popularAdapters);
     GroceryRecyclerView.setAdapter(groceryKitchenAdapters);
-    SnackRecyclerView.setAdapter(snackAdapters); // Set SnackAdapter
+    SnackRecyclerView.setAdapter(snackAdapters);
+
+
+    fetchPopularItems();
+//    fetchGroceryItems();
+//    fetchSnackItems();
 
     return view;
   }
 
-  // Generic method to load items from JSON based on the model type
-  private <T> List<T> loadItemsFromJson(String fileName, Type typeOfT) {
-    List<T> items = new ArrayList<>();
-    try {
-      // Open the JSON file from the assets
-      InputStream inputStream = requireContext().getAssets().open(fileName);
-      String json = convertStreamToString(inputStream);
-
-      // Use Gson to parse the JSON into a list of the provided type
-      Gson gson = new Gson();
-      items = gson.fromJson(json, typeOfT);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return items;
+  private void fetchPopularItems() {
+    db.collection("popular").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+      @Override
+      public void onComplete(@NonNull Task<QuerySnapshot> task) {
+        if (task.isSuccessful()) {
+          try {
+            for (QueryDocumentSnapshot doc : task.getResult()) {
+              PopularModel popularModel = doc.toObject(PopularModel.class);
+              popularModelList.add(popularModel);
+            }
+            popularAdapters.notifyDataSetChanged();
+          } catch (Exception e) {
+            Log.e("Firestore Error", "Error parsing data", e);
+          }
+        } else {
+          Log.e("Firestore Error", "Failed to fetch data", task.getException());
+        }
+      }
+    });
   }
 
-  // Convert InputStream to String
-  private String convertStreamToString(InputStream is) {
-    Scanner scanner = new Scanner(is);
-    StringBuilder stringBuilder = new StringBuilder();
-    while (scanner.hasNext()) {
-      stringBuilder.append(scanner.nextLine());
-    }
-    return stringBuilder.toString();
-  }
+//  private void fetchGroceryItems() {
+//    CollectionReference groceryRef = db.collection("grocery");
+//    groceryRef.get().addOnCompleteListener(task -> {
+//      if (task.isSuccessful() && task.getResult() != null) {
+//        groceryKitchens.clear();
+//        for (var document : task.getResult()) {
+//          GroceryModel item = document.toObject(GroceryModel.class);
+//          groceryKitchens.add(item);
+//        }
+//        groceryKitchenAdapters.notifyDataSetChanged();
+//      } else {
+//        Log.e("HomeFragment", "Error fetching grocery items", task.getException());
+//      }
+//    });
+//  }
+
+//  private void fetchSnackItems() {
+//    CollectionReference snackRef = db.collection("snacks");
+//    snackRef.get().addOnCompleteListener(task -> {
+//      if (task.isSuccessful() && task.getResult() != null) {
+//        snackList.clear();
+//        for (var document : task.getResult()) {
+//          SnackModel item = document.toObject(SnackModel.class);
+//          snackList.add(item);
+//        }
+//        snackAdapters.notifyDataSetChanged();
+//      } else {
+//        Log.e("HomeFragment", "Error fetching snack items", task.getException());
+//      }
+//    });
+//  }
 }

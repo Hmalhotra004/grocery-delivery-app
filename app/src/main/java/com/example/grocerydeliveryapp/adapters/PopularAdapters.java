@@ -52,10 +52,9 @@ public class PopularAdapters extends RecyclerView.Adapter<PopularAdapters.ViewHo
     holder.itemView.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        int CurrentItem = currentItem.getId();
-        String file = CheckItem.getFile(CurrentItem);
+        String currentItemType = currentItem.getType();
         Intent intent = new Intent(context, ViewAllActivity.class);
-        intent.putExtra("file", file);
+        intent.putExtra("type", currentItemType);
         intent.putExtra("title", currentItem.getName());
         context.startActivity(intent);
       }
@@ -73,7 +72,6 @@ public class PopularAdapters extends RecyclerView.Adapter<PopularAdapters.ViewHo
     return popularModelList.size();
   }
 
-  // ViewHolder class to hold references to the views for each item
   public class ViewHolder extends RecyclerView.ViewHolder {
     ImageView popImg1, popImg2, popImg3, popImg4;
     TextView name;
@@ -81,7 +79,6 @@ public class PopularAdapters extends RecyclerView.Adapter<PopularAdapters.ViewHo
     public ViewHolder(@NonNull View itemView) {
       super(itemView);
 
-      // Initialize the ImageView and TextView references
       popImg1 = itemView.findViewById(R.id.popImg1);
       popImg2 = itemView.findViewById(R.id.popImg2);
       popImg3 = itemView.findViewById(R.id.popImg3);
@@ -89,7 +86,4 @@ public class PopularAdapters extends RecyclerView.Adapter<PopularAdapters.ViewHo
       name = itemView.findViewById(R.id.popName);
     }
   }
-
-
-
 }
