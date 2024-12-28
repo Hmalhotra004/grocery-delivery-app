@@ -81,7 +81,7 @@ public class HomeFragment extends Fragment {
 
     fetchPopularItems();
     fetchGroceryItems();
-//    fetchSnackItems();
+    fetchSnackItems();
 
     return view;
   }

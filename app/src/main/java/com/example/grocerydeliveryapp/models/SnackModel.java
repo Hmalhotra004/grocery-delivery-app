@@ -1,23 +1,10 @@
 package com.example.grocerydeliveryapp.models;
 
 public class SnackModel {
-  private String name;
-  private int id;
-  private String imageUrl1;
+  public String name,type;
+  public String imageUrl;
 
-  public SnackModel(String name, String imageUrl1,int id) {
-    this.name = name;
-    this.imageUrl1 = imageUrl1;
-    this.id = id;
-  }
-
-  public int getId() {
-    return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
-  }
+  public SnackModel() {}
 
   public String getName() {
     return name;
@@ -27,11 +14,19 @@ public class SnackModel {
     this.name = name;
   }
 
-  public String getImageUrl1() {
-    return imageUrl1;
+  public String getType() {
+    return type;
   }
 
-  public void setImageUrl1(String imageUrl1) {
-    this.imageUrl1 = imageUrl1;
+  public void setType(String type) {
+    this.type = type;
+  }
+
+  public String getImageUrl() {
+    return imageUrl;
+  }
+
+  public void setImageUrl(String imageUrl) {
+    this.imageUrl = imageUrl;
   }
 }
