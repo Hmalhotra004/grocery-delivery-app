@@ -41,16 +41,15 @@ public class GroceryAdapters extends RecyclerView.Adapter<GroceryAdapters.ViewHo
     GroceryModel currentItem = groceryKitchenList.get(position);
 
     // Set the image resource and name for the current item
-    holder.kitchenImg.setImageResource(getImageResource(currentItem.getImageUrl1()));
+    holder.kitchenImg.setImageResource(getImageResource(currentItem.getImageUrl()));
     holder.name.setText(currentItem.getName());
 
     holder.itemView.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        int CurrentItem = currentItem.getId();
-        String file = CheckItem.getFile(CurrentItem);
+        String currentItemType = currentItem.getType();
         Intent intent = new Intent(context, ViewAllActivity.class);
-        intent.putExtra("file", file);
+        intent.putExtra("type", currentItemType);
         intent.putExtra("title", currentItem.getName());
         context.startActivity(intent);
       }
