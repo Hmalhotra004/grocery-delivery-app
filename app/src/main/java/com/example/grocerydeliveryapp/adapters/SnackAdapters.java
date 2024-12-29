@@ -41,16 +41,15 @@ public class SnackAdapters extends RecyclerView.Adapter<SnackAdapters.ViewHolder
     SnackModel currentItem = snackList.get(position);
 
     // Set the image resource and name for the current item
-    holder.snackImg.setImageResource(getImageResource(currentItem.getImageUrl1()));
+    holder.snackImg.setImageResource(getImageResource(currentItem.getImageUrl()));
     holder.name.setText(currentItem.getName());
 
     holder.itemView.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        int CurrentItem = currentItem.getId();
-        String file = CheckItem.getFile(CurrentItem);
+        String currentItemType = currentItem.getType();
         Intent intent = new Intent(context, ViewAllActivity.class);
-        intent.putExtra("file", file);
+        intent.putExtra("type", currentItemType);
         intent.putExtra("title", currentItem.getName());
         context.startActivity(intent);
       }

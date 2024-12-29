@@ -1,18 +1,12 @@
 package com.example.grocerydeliveryapp.models;
 
 public class ViewAllModel {
-  private String name;
+  private String name,productId;
   private int price;
   private String imageUrl;
   private String amt;
 
-
-  public ViewAllModel(String name, int price, String imageUrl,String amt) {
-    this.name = name;
-    this.price = price;
-    this.imageUrl = imageUrl;
-    this.amt = amt;
-  }
+  public ViewAllModel() {}
 
   public String getAmt() {
     return amt;
@@ -44,5 +38,13 @@ public class ViewAllModel {
 
   public void setImageUrl(String imageUrl) {
     this.imageUrl = imageUrl;
+  }
+
+  public String getProductId() {
+    return productId;
+  }
+
+  public void setProductId(String productId) {
+    this.productId = productId;
   }
 }
