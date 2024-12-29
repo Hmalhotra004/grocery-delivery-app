@@ -18,14 +18,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-  private static final String ARG_PARAM1 = "param1";
-  private static final String ARG_PARAM2 = "param2";
 import java.util.ArrayList;
 import java.util.List;
 
+public class CartFragment extends Fragment {
+  private static final String ARG_PARAM1 = "param1";
+  private static final String ARG_PARAM2 = "param2";
   private String mParam1;
   private String mParam2;
-public class CartFragment extends Fragment {
 
   public CartFragment() {
     // Required empty public constructor
@@ -51,21 +51,16 @@ public class CartFragment extends Fragment {
     }
   }
   RecyclerView cartRecyclerView;
-  TextView emptyCartMessage;
-
   FirebaseFirestore db;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    // Inflate the layout for this fragment
-    return inflater.inflate(R.layout.fragment_cart, container, false);
     View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
     db = FirebaseFirestore.getInstance();
 
     cartRecyclerView = view.findViewById(R.id.cartItemRec);
-//    emptyCartMessage = view.findViewById(R.id.emptyCartMessage);
 
     cartRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
@@ -77,5 +72,5 @@ public class CartFragment extends Fragment {
 
     return view;
   }
-  }
-}}
+}
+
