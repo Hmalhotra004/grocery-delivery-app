@@ -30,11 +30,15 @@
     <string name="newPass">New:</string>
     <string name="confirmPass">Confirm:</string>
 
+    <!--  Cart  -->
+    <string name="cart">Cart</string>
+
     <string name="SaveBtn">Save</string>
     <string name="AddBtn">Add</string>
 
     <string name="price">155</string>
     <string name="atc">Add to Cart</string>
     <string name="Fruits">Fruits</string>
+    <string name="Products">Products</string>
 
 </resources>
