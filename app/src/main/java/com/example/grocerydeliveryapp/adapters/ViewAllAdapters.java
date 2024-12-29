@@ -52,17 +52,16 @@ public class ViewAllAdapters extends RecyclerView.Adapter<ViewAllAdapters.ViewHo
     holder.imageView.setImageResource(getImageResource(currentItem.getImageUrl()));
 
     holder.add.setOnClickListener(view -> {
-      // Get the current user's ID
       String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
       if (userId != null) {
         // Create a map for the cart item
         Map<String, Object> cartItem = new HashMap<>();
         cartItem.put("userId", userId);
-//        cartItem.put("productId", currentItem.getProductId());
+        cartItem.put("productId", currentItem.getProductId());
         cartItem.put("name",currentItem.getName());
         cartItem.put("imageUrl",currentItem.getImageUrl());
-        cartItem.put("desp",currentItem.getAmt());
+        cartItem.put("description",currentItem.getAmt());
         cartItem.put("quantity", 1); // Default quantity
         cartItem.put("price", currentItem.getPrice());
 
