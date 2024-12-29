@@ -1,7 +1,7 @@
 package com.example.grocerydeliveryapp.models;
 
 public class ViewAllModel {
-  private String name;
+  private String name,productId;
   private int price;
   private String imageUrl;
   private String amt;
@@ -38,5 +38,13 @@ public class ViewAllModel {
 
   public void setImageUrl(String imageUrl) {
     this.imageUrl = imageUrl;
+  }
+
+  public String getProductId() {
+    return productId;
+  }
+
+  public void setProductId(String productId) {
+    this.productId = productId;
   }
 }
