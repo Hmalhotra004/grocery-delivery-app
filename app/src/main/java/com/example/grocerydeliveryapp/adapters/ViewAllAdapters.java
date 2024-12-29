@@ -66,7 +66,12 @@ public class ViewAllAdapters extends RecyclerView.Adapter<ViewAllAdapters.ViewHo
           if (task.isSuccessful() && !task.getResult().isEmpty()) {
             // If the item is in the cart, show quantity adjuster (plus/minus buttons)
             holder.add.setVisibility(View.GONE);  // Hide "Add to Cart" button
-            holder.quantityAdjuster.setVisibility(View.VISIBLE);  // Show quantity adjuster
+            holder.quantityAdjuster.setVisibility(View.VISIBLE);
+
+            // Fetch the quantity from Firestore and display it
+            DocumentSnapshot document = task.getResult().getDocuments().get(0);
+            int currentQuantity = document.getLong("quantity").intValue();
+            holder.qty.setText(String.valueOf(currentQuantity));  // Set the quantity in the UI
           } else {
             // If the item is not in the cart, show the "Add to Cart" button
             holder.add.setVisibility(View.VISIBLE);
@@ -139,6 +144,7 @@ public class ViewAllAdapters extends RecyclerView.Adapter<ViewAllAdapters.ViewHo
               .update(updatedCartItem)
               .addOnSuccessListener(aVoid -> {
                 Toast.makeText(context, "Quantity updated!", Toast.LENGTH_SHORT).show();
+                holder.qty.setText(String.valueOf(newQuantity));  // Update the quantity TextView
               })
               .addOnFailureListener(e -> {
                 Toast.makeText(context, "Failed to update quantity.", Toast.LENGTH_SHORT).show();
@@ -147,6 +153,7 @@ public class ViewAllAdapters extends RecyclerView.Adapter<ViewAllAdapters.ViewHo
         }
       });
   }
+
 
   private int getImageResource(String imageName) {
     // Get the resource ID by the image name
@@ -160,7 +167,7 @@ public class ViewAllAdapters extends RecyclerView.Adapter<ViewAllAdapters.ViewHo
 
   public static class ViewHolder extends RecyclerView.ViewHolder {
     ImageView imageView;
-    TextView name, price, amt;
+    TextView name, price, amt,qty;
     Button add;
     Button minusBtn, plusBtn;
     LinearLayout quantityAdjuster;
@@ -174,6 +181,7 @@ public class ViewAllAdapters extends RecyclerView.Adapter<ViewAllAdapters.ViewHo
       add = itemView.findViewById(R.id.addToCartBtn);
       minusBtn = itemView.findViewById(R.id.minusBtn);
       plusBtn = itemView.findViewById(R.id.plusBtn);
+      qty= itemView.findViewById(R.id.quantity);
       quantityAdjuster = itemView.findViewById(R.id.quantityAdjuster);
     }
   }
