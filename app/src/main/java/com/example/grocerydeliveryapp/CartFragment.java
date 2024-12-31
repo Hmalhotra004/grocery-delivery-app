@@ -1,5 +1,6 @@
 package com.example.grocerydeliveryapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -42,7 +43,6 @@ public class CartFragment extends Fragment {
 
   private List<CartModel> cartModelList;
   private CartAdapters cartAdapters;
-  private RecyclerView cartRecyclerView;
   private FirebaseFirestore db;
   private FirebaseAuth auth;
 
@@ -63,7 +63,7 @@ public class CartFragment extends Fragment {
     db = FirebaseFirestore.getInstance();
     auth = FirebaseAuth.getInstance();
 
-    cartRecyclerView = view.findViewById(R.id.cartItemRec);
+    RecyclerView cartRecyclerView = view.findViewById(R.id.cartItemRec);
     cartRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
     cartModelList = new ArrayList<>();
@@ -80,7 +80,8 @@ public class CartFragment extends Fragment {
     String userId = auth.getCurrentUser() != null ? auth.getCurrentUser().getUid() : null;
 
     if (userId == null) {
-      Toast.makeText(getContext(), "Please log in to view your cart.", Toast.LENGTH_SHORT).show();
+      Intent intent = new Intent(getActivity(), LoginActivity.class);
+      startActivity(intent);
       return;
     }
 
@@ -94,12 +95,31 @@ public class CartFragment extends Fragment {
 
         if (snapshots != null) {
           cartModelList.clear();
+          double itemsTotal = 0.0;
+
           for (QueryDocumentSnapshot document : snapshots) {
             CartModel cartItem = document.toObject(CartModel.class);
             cartItem.setProductId(document.getId());
             cartModelList.add(cartItem);
+
+            // Assuming CartModel has 'price' and 'quantity' fields
+            double price = cartItem.getPrice(); // Replace with the actual field
+            int quantity = cartItem.getQuantity(); // Replace with the actual field
+            itemsTotal += price * quantity;
           }
+
           cartAdapters.notifyDataSetChanged();
+
+          // Update UI with calculated totals
+          TextView itemsTotalTextView = getView().findViewById(R.id.cartItemsTotal);
+          TextView grandTotalTextView = getView().findViewById(R.id.grandTotal);
+
+          double handlingCharge = 5.0;
+          double deliveryCharge = 25.0;
+          double grandTotal = itemsTotal + handlingCharge + deliveryCharge;
+
+          itemsTotalTextView.setText(String.format("₹"+ itemsTotal));
+          grandTotalTextView.setText(String.format("₹"+ grandTotal));
         }
       });
   }
