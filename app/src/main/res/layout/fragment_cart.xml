@@ -38,6 +38,7 @@
             android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:layout_marginStart="10dp"
             android:text="@string/Products"
             />
 
