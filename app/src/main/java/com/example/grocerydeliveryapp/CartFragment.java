@@ -118,8 +118,8 @@ public class CartFragment extends Fragment {
           double deliveryCharge = 25.0;
           double grandTotal = itemsTotal + handlingCharge + deliveryCharge;
 
-          itemsTotalTextView.setText(String.format("₹%.2f", itemsTotal));
-          grandTotalTextView.setText(String.format("₹%.2f", grandTotal));
+          itemsTotalTextView.setText(String.format("₹"+ itemsTotal));
+          grandTotalTextView.setText(String.format("₹"+ grandTotal));
         }
       });
   }
