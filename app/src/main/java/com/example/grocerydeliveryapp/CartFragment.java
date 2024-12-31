@@ -95,12 +95,31 @@ public class CartFragment extends Fragment {
 
         if (snapshots != null) {
           cartModelList.clear();
+          double itemsTotal = 0.0;
+
           for (QueryDocumentSnapshot document : snapshots) {
             CartModel cartItem = document.toObject(CartModel.class);
             cartItem.setProductId(document.getId());
             cartModelList.add(cartItem);
+
+            // Assuming CartModel has 'price' and 'quantity' fields
+            double price = cartItem.getPrice(); // Replace with the actual field
+            int quantity = cartItem.getQuantity(); // Replace with the actual field
+            itemsTotal += price * quantity;
           }
+
           cartAdapters.notifyDataSetChanged();
+
+          // Update UI with calculated totals
+          TextView itemsTotalTextView = getView().findViewById(R.id.cartItemsTotal);
+          TextView grandTotalTextView = getView().findViewById(R.id.grandTotal);
+
+          double handlingCharge = 5.0;
+          double deliveryCharge = 25.0;
+          double grandTotal = itemsTotal + handlingCharge + deliveryCharge;
+
+          itemsTotalTextView.setText(String.format("₹%.2f", itemsTotal));
+          grandTotalTextView.setText(String.format("₹%.2f", grandTotal));
         }
       });
   }
