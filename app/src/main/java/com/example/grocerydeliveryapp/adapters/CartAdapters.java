@@ -7,12 +7,14 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.grocerydeliveryapp.R;
 import com.example.grocerydeliveryapp.models.CartModel;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
@@ -20,57 +22,82 @@ public class CartAdapters extends RecyclerView.Adapter<CartAdapters.ViewHolder> 
 
   private Context context;
   private List<CartModel> cartItems;
+  private FirebaseFirestore db;
 
   public CartAdapters(Context context, List<CartModel> cartItems) {
     this.context = context;
     this.cartItems = cartItems;
+    this.db = FirebaseFirestore.getInstance();
   }
 
   @NonNull
   @Override
   public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-    // Inflate the layout for cart items
     return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_item, parent, false));
   }
 
   @Override
   public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-    // Get the current cart item
     CartModel currentItem = cartItems.get(position);
 
     // Bind data to the views
     holder.name.setText(currentItem.getName());
-    holder.price.setText("₹" + currentItem.getPrice());
     holder.qty.setText(String.valueOf(currentItem.getQuantity()));
     holder.description.setText(currentItem.getDescription());
+
+    // Calculate total price for the current item
+    double totalPrice = currentItem.getPrice() * currentItem.getQuantity();
+    holder.price.setText("₹" + totalPrice);
 
     holder.img.setImageResource(getImageResource(currentItem.getImageUrl()));
 
     holder.cartPLus.setOnClickListener(v -> {
-      currentItem.setQuantity(currentItem.getQuantity() + 1);
-      notifyItemChanged(position);
+      int newQuantity = currentItem.getQuantity() + 1;
+      currentItem.setQuantity(newQuantity);
+      updateCartItem(currentItem, position);
     });
 
     holder.cartMinus.setOnClickListener(v -> {
-      if (currentItem.getQuantity() > 1) {
-        currentItem.setQuantity(currentItem.getQuantity() - 1);
-        notifyItemChanged(position);
+      int newQuantity = currentItem.getQuantity() - 1;
+      if (newQuantity > 0) {
+        currentItem.setQuantity(newQuantity);
+        updateCartItem(currentItem, position);
+      } else {
+        removeCartItem(currentItem, position);
       }
     });
   }
 
   private int getImageResource(String imageName) {
-    // Get the resource ID by the image name
     return context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
+  }
+
+  private void updateCartItem(CartModel cartItem, int position) {
+    db.collection("cart").document(cartItem.getProductId()) // Ensure `cartItem` has a unique `id` field
+      .update("quantity", cartItem.getQuantity())
+      .addOnSuccessListener(aVoid -> {
+        notifyItemChanged(position);
+        Toast.makeText(context, "Cart updated.", Toast.LENGTH_SHORT).show();
+      })
+      .addOnFailureListener(e -> Toast.makeText(context, "Failed to update cart.", Toast.LENGTH_SHORT).show());
+  }
+
+  private void removeCartItem(CartModel cartItem, int position) {
+    db.collection("cart").document(cartItem.getProductId())
+      .delete()
+      .addOnSuccessListener(aVoid -> {
+        cartItems.remove(position);
+        notifyItemRemoved(position);
+        Toast.makeText(context, "Item removed from cart.", Toast.LENGTH_SHORT).show();
+      })
+      .addOnFailureListener(e -> Toast.makeText(context, "Failed to remove item from cart.", Toast.LENGTH_SHORT).show());
   }
 
   @Override
   public int getItemCount() {
-    // Return the size of the cart item list
     return cartItems.size();
   }
 
-  // ViewHolder class to hold the views for each cart item
   public static class ViewHolder extends RecyclerView.ViewHolder {
     ImageView img;
     TextView name, price, qty, description;
@@ -79,7 +106,6 @@ public class CartAdapters extends RecyclerView.Adapter<CartAdapters.ViewHolder> 
     public ViewHolder(@NonNull View itemView) {
       super(itemView);
 
-      // Initialize the views
       img = itemView.findViewById(R.id.cartImg);
       name = itemView.findViewById(R.id.cartName);
       price = itemView.findViewById(R.id.cartPrice);

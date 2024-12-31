@@ -86,28 +86,21 @@ public class CartFragment extends Fragment {
 
     db.collection("cart")
       .whereEqualTo("userId", userId)
-      .get()
-      .addOnCompleteListener(task -> {
-        if (task.isSuccessful() && task.getResult() != null) {
-          cartModelList.clear();
+      .addSnapshotListener((snapshots, error) -> {
+        if (error != null) {
+          Toast.makeText(getContext(), "Failed to load cart items.", Toast.LENGTH_SHORT).show();
+          return;
+        }
 
-          for (QueryDocumentSnapshot document : task.getResult()) {
+        if (snapshots != null) {
+          cartModelList.clear();
+          for (QueryDocumentSnapshot document : snapshots) {
             CartModel cartItem = document.toObject(CartModel.class);
+            cartItem.setProductId(document.getId());
             cartModelList.add(cartItem);
           }
-
           cartAdapters.notifyDataSetChanged();
-
-          if (cartModelList.isEmpty()) {
-            Toast.makeText(getContext(), "Your cart is empty.", Toast.LENGTH_SHORT).show();
-          }
-        } else {
-          Toast.makeText(getContext(), "Failed to load cart items.", Toast.LENGTH_SHORT).show();
         }
-      })
-      .addOnFailureListener(e -> {
-        Toast.makeText(getContext(), "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
       });
   }
-
 }
