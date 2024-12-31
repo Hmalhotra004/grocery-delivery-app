@@ -42,7 +42,6 @@ public class CartFragment extends Fragment {
 
   private List<CartModel> cartModelList;
   private CartAdapters cartAdapters;
-  private RecyclerView cartRecyclerView;
   private FirebaseFirestore db;
   private FirebaseAuth auth;
 
@@ -63,7 +62,7 @@ public class CartFragment extends Fragment {
     db = FirebaseFirestore.getInstance();
     auth = FirebaseAuth.getInstance();
 
-    cartRecyclerView = view.findViewById(R.id.cartItemRec);
+    RecyclerView cartRecyclerView = view.findViewById(R.id.cartItemRec);
     cartRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
     cartModelList = new ArrayList<>();
