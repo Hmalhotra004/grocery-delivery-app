@@ -1,21 +1,22 @@
 package com.example.grocerydeliveryapp.models;
 
 public class CartModel {
-  private String name,desp;
-  private double price;
-  private int quantity;
-  private String imageUrl;
+  public String name, description,productId;
+  public double price;
+  public int quantity;
+  public String imageUrl;
 
   public CartModel() {}
   // Constructor
 
-  public CartModel(String name, double price, int quantity, String imageUrl,String desp) {
-    this.name = name;
-    this.price = price;
-    this.quantity = quantity;
-    this.imageUrl = imageUrl;
-    this.desp = desp;
-  }
+//  public CartModel(String name, double price, int quantity, String imageUrl,String description, String productId) {
+//    this.name = name;
+//    this.price = price;
+//    this.quantity = quantity;
+//    this.imageUrl = imageUrl;
+//    this.description = description;
+//    this.productId = productId;
+//  }
 
 
   // Getters and setters
@@ -27,12 +28,12 @@ public class CartModel {
     this.name = name;
   }
 
-  public String getDesp() {
-    return desp;
+  public String getDescription() {
+    return description;
   }
 
-  public void setDesp(String desp) {
-    this.desp = desp;
+  public void setDescription(String description) {
+    this.description = description;
   }
 
   public double getPrice() {
@@ -57,5 +58,13 @@ public class CartModel {
 
   public void setImageUrl(String imageUrl) {
     this.imageUrl = imageUrl;
+  }
+
+  public String getProductId() {
+    return productId;
+  }
+
+  public void setProductId(String productId) {
+    this.productId = productId;
   }
 }

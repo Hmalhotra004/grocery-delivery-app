@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -40,10 +41,22 @@ public class CartAdapters extends RecyclerView.Adapter<CartAdapters.ViewHolder> 
     // Bind data to the views
     holder.name.setText(currentItem.getName());
     holder.price.setText("₹" + currentItem.getPrice());
-    holder.qty.setText(currentItem.getQuantity());
-    holder.desp.setText(currentItem.getDesp());
+    holder.qty.setText(String.valueOf(currentItem.getQuantity()));
+    holder.description.setText(currentItem.getDescription());
 
     holder.img.setImageResource(getImageResource(currentItem.getImageUrl()));
+
+    holder.cartPLus.setOnClickListener(v -> {
+      currentItem.setQuantity(currentItem.getQuantity() + 1);
+      notifyItemChanged(position);
+    });
+
+    holder.cartMinus.setOnClickListener(v -> {
+      if (currentItem.getQuantity() > 1) {
+        currentItem.setQuantity(currentItem.getQuantity() - 1);
+        notifyItemChanged(position);
+      }
+    });
   }
 
   private int getImageResource(String imageName) {
@@ -60,17 +73,20 @@ public class CartAdapters extends RecyclerView.Adapter<CartAdapters.ViewHolder> 
   // ViewHolder class to hold the views for each cart item
   public static class ViewHolder extends RecyclerView.ViewHolder {
     ImageView img;
-    TextView name, price, qty,desp;
+    TextView name, price, qty, description;
+    ImageButton cartPLus, cartMinus;
 
     public ViewHolder(@NonNull View itemView) {
       super(itemView);
 
       // Initialize the views
-      img = itemView.findViewById(R.id.cartItemRec);
+      img = itemView.findViewById(R.id.cartImg);
       name = itemView.findViewById(R.id.cartName);
       price = itemView.findViewById(R.id.cartPrice);
       qty = itemView.findViewById(R.id.cartQty);
-      desp = itemView.findViewById(R.id.cartDesp);
+      description = itemView.findViewById(R.id.cartDesp);
+      cartPLus = itemView.findViewById(R.id.cartPLus);
+      cartMinus = itemView.findViewById(R.id.cartMinus);
     }
   }
 }
