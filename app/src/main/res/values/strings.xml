@@ -40,5 +40,11 @@
     <string name="atc">Add to Cart</string>
     <string name="Fruits">Fruits</string>
     <string name="Products">Products</string>
+    <string name="Bill">Bill Details</string>
+    <string name="ItemsTotal">Items Total</string>
+    <string name="HandlingCharge">Handling Charge</string>
+    <string name="DeliveryCharge">Delivery Charge</string>
+    <string name="GrandTotal">Grand Total</string>
+    <string name="PlaceOrder">Place Order</string>
 
 </resources>
