@@ -35,7 +35,7 @@ public class ViewAllAdapters extends RecyclerView.Adapter<ViewAllAdapters.ViewHo
   public ViewAllAdapters(Context context, List<ViewAllModel> viewAllModelList) {
     this.context = context;
     this.viewAllModelList = viewAllModelList;
-    this.db = FirebaseFirestore.getInstance(); // Initialize Firestore
+    this.db = FirebaseFirestore.getInstance();
   }
 
   @NonNull
@@ -57,42 +57,40 @@ public class ViewAllAdapters extends RecyclerView.Adapter<ViewAllAdapters.ViewHo
     String userId = FirebaseAuth.getInstance().getCurrentUser() != null ? FirebaseAuth.getInstance().getCurrentUser().getUid() : null;
 
     if (userId != null) {
-      // Check if the item is already in the cart
       db.collection("cart")
         .whereEqualTo("userId", userId)
         .whereEqualTo("productId", currentItem.getProductId())
-        .get()
-        .addOnCompleteListener(task -> {
-          if (task.isSuccessful() && !task.getResult().isEmpty()) {
-            // If the item is in the cart, show quantity adjuster (plus/minus buttons)
-            holder.add.setVisibility(View.GONE);  // Hide "Add to Cart" button
+        .addSnapshotListener((value, error) -> {
+          if (error != null) {
+            Toast.makeText(context, "Error fetching cart data.", Toast.LENGTH_SHORT).show();
+            return;
+          }
+
+          if (value != null && !value.isEmpty()) {
+            holder.add.setVisibility(View.GONE);
             holder.quantityAdjuster.setVisibility(View.VISIBLE);
 
-            // Fetch the quantity from Firestore and display it
-            DocumentSnapshot document = task.getResult().getDocuments().get(0);
+            DocumentSnapshot document = value.getDocuments().get(0);
             int currentQuantity = document.getLong("quantity").intValue();
-            holder.qty.setText(String.valueOf(currentQuantity));  // Set the quantity in the UI
+            holder.qty.setText(String.valueOf(currentQuantity));
           } else {
-            // If the item is not in the cart, show the "Add to Cart" button
             holder.add.setVisibility(View.VISIBLE);
-            holder.quantityAdjuster.setVisibility(View.GONE); // Hide quantity adjuster
+            holder.quantityAdjuster.setVisibility(View.GONE);
           }
         });
     }
 
     holder.add.setOnClickListener(view -> {
       if (userId != null) {
-        // Create a map for the cart item
         Map<String, Object> cartItem = new HashMap<>();
         cartItem.put("userId", userId);
         cartItem.put("productId", currentItem.getProductId());
         cartItem.put("name", currentItem.getName());
         cartItem.put("imageUrl", currentItem.getImageUrl());
         cartItem.put("description", currentItem.getAmt());
-        cartItem.put("quantity", 1); // Default quantity
+        cartItem.put("quantity", 1); 
         cartItem.put("price", currentItem.getPrice());
 
-        // Add to Firestore
         db.collection("cart")
           .add(cartItem)
           .addOnSuccessListener(documentReference ->
@@ -104,14 +102,8 @@ public class ViewAllAdapters extends RecyclerView.Adapter<ViewAllAdapters.ViewHo
       }
     });
 
-    // Handle quantity update in the cart
-    holder.minusBtn.setOnClickListener(v -> {
-      updateQuantityInCart(holder, currentItem, userId, -1);
-    });
-
-    holder.plusBtn.setOnClickListener(v -> {
-      updateQuantityInCart(holder, currentItem, userId, 1);
-    });
+    holder.minusBtn.setOnClickListener(v -> updateQuantityInCart(holder, currentItem, userId, -1));
+    holder.plusBtn.setOnClickListener(v -> updateQuantityInCart(holder, currentItem, userId, 1));
   }
 
   private void updateQuantityInCart(ViewHolder holder, ViewAllModel currentItem, String userId, int quantityChange) {
@@ -126,7 +118,6 @@ public class ViewAllAdapters extends RecyclerView.Adapter<ViewAllAdapters.ViewHo
           int newQuantity = currentQuantity + quantityChange;
 
           if (newQuantity <= 0) {
-            // Remove the item from the cart if quantity becomes zero or negative
             db.collection("cart").document(document.getId())
               .delete()
               .addOnSuccessListener(aVoid -> {
@@ -143,8 +134,8 @@ public class ViewAllAdapters extends RecyclerView.Adapter<ViewAllAdapters.ViewHo
             db.collection("cart").document(document.getId())
               .update(updatedCartItem)
               .addOnSuccessListener(aVoid -> {
-                Toast.makeText(context, "Quantity updated!", Toast.LENGTH_SHORT).show();
-                holder.qty.setText(String.valueOf(newQuantity));  // Update the quantity TextView
+//                Toast.makeText(context, "Quantity updated!", Toast.LENGTH_SHORT).show();
+                holder.qty.setText(String.valueOf(newQuantity));
               })
               .addOnFailureListener(e -> {
                 Toast.makeText(context, "Failed to update quantity.", Toast.LENGTH_SHORT).show();
