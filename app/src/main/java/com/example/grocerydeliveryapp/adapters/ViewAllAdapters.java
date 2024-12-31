@@ -88,7 +88,7 @@ public class ViewAllAdapters extends RecyclerView.Adapter<ViewAllAdapters.ViewHo
         cartItem.put("name", currentItem.getName());
         cartItem.put("imageUrl", currentItem.getImageUrl());
         cartItem.put("description", currentItem.getAmt());
-        cartItem.put("quantity", 1); 
+        cartItem.put("quantity", 1);
         cartItem.put("price", currentItem.getPrice());
 
         db.collection("cart")
