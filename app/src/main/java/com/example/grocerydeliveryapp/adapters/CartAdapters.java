@@ -77,7 +77,6 @@ public class CartAdapters extends RecyclerView.Adapter<CartAdapters.ViewHolder> 
       .update("quantity", cartItem.getQuantity())
       .addOnSuccessListener(aVoid -> {
         notifyItemChanged(position);
-        Toast.makeText(context, "Cart updated.", Toast.LENGTH_SHORT).show();
       })
       .addOnFailureListener(e -> Toast.makeText(context, "Failed to update cart.", Toast.LENGTH_SHORT).show());
   }
@@ -88,7 +87,6 @@ public class CartAdapters extends RecyclerView.Adapter<CartAdapters.ViewHolder> 
       .addOnSuccessListener(aVoid -> {
         cartItems.remove(position);
         notifyItemRemoved(position);
-        Toast.makeText(context, "Item removed from cart.", Toast.LENGTH_SHORT).show();
       })
       .addOnFailureListener(e -> Toast.makeText(context, "Failed to remove item from cart.", Toast.LENGTH_SHORT).show());
   }
