@@ -120,10 +120,20 @@ public class CartFragment extends Fragment {
 
           cartAdapters.notifyDataSetChanged();
 
-          double grandTotal = itemsTotal + handlingCharge + deliveryCharge;
+          if (cartModelList.isEmpty()) {
+            // Show fallback message and hide bill details
+            fallback.setVisibility(View.VISIBLE);
+            fallback.setText("No items in your cart.");
+            billDetails.setVisibility(View.GONE);
+          } else {
+            // Hide fallback message and show bill details
+            fallback.setVisibility(View.GONE);
+            billDetails.setVisibility(View.VISIBLE);
 
-          itemsTotalTextView.setText(String.format("₹"+ itemsTotal));
-          grandTotalTextView.setText(String.format("₹"+ grandTotal));
+            double grandTotal = itemsTotal + handlingCharge + deliveryCharge;
+            itemsTotalTextView.setText(String.format("₹%.2f", itemsTotal));
+            grandTotalTextView.setText(String.format("₹%.2f", grandTotal));
+          }
         }
       });
   }
