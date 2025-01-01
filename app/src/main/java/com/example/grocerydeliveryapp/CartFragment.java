@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,10 +42,14 @@ public class CartFragment extends Fragment {
     return fragment;
   }
 
-  private List<CartModel> cartModelList;
-  private CartAdapters cartAdapters;
-  private FirebaseFirestore db;
-  private FirebaseAuth auth;
+  public List<CartModel> cartModelList;
+  public CartAdapters cartAdapters;
+  public FirebaseFirestore db;
+  public FirebaseAuth auth;
+  public LinearLayout billDetails;
+  public TextView fallback,itemsTotalTextView,grandTotalTextView;
+  public double handlingCharge = 5.0;
+  public double deliveryCharge = 25.0;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +67,12 @@ public class CartFragment extends Fragment {
 
     db = FirebaseFirestore.getInstance();
     auth = FirebaseAuth.getInstance();
+
+    fallback = view.findViewById(R.id.fallbackCart);
+    billDetails = view.findViewById(R.id.billDetailsL);
+
+     itemsTotalTextView = view.findViewById(R.id.cartItemsTotal);
+     grandTotalTextView = view.findViewById(R.id.grandTotal);
 
     RecyclerView cartRecyclerView = view.findViewById(R.id.cartItemRec);
     cartRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
@@ -102,20 +113,13 @@ public class CartFragment extends Fragment {
             cartItem.setProductId(document.getId());
             cartModelList.add(cartItem);
 
-            // Assuming CartModel has 'price' and 'quantity' fields
-            double price = cartItem.getPrice(); // Replace with the actual field
-            int quantity = cartItem.getQuantity(); // Replace with the actual field
+            double price = cartItem.getPrice();
+            int quantity = cartItem.getQuantity();
             itemsTotal += price * quantity;
           }
 
           cartAdapters.notifyDataSetChanged();
 
-          // Update UI with calculated totals
-          TextView itemsTotalTextView = getView().findViewById(R.id.cartItemsTotal);
-          TextView grandTotalTextView = getView().findViewById(R.id.grandTotal);
-
-          double handlingCharge = 5.0;
-          double deliveryCharge = 25.0;
           double grandTotal = itemsTotal + handlingCharge + deliveryCharge;
 
           itemsTotalTextView.setText(String.format("₹"+ itemsTotal));
