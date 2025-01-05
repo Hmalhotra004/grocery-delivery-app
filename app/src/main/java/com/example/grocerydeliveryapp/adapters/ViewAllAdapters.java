@@ -93,8 +93,6 @@ public class ViewAllAdapters extends RecyclerView.Adapter<ViewAllAdapters.ViewHo
 
         db.collection("cart")
           .add(cartItem)
-          .addOnSuccessListener(documentReference ->
-            Toast.makeText(context, "Item added to cart!", Toast.LENGTH_SHORT).show())
           .addOnFailureListener(e ->
             Toast.makeText(context, "Failed to add item to cart.", Toast.LENGTH_SHORT).show());
       } else {
@@ -120,9 +118,6 @@ public class ViewAllAdapters extends RecyclerView.Adapter<ViewAllAdapters.ViewHo
           if (newQuantity <= 0) {
             db.collection("cart").document(document.getId())
               .delete()
-              .addOnSuccessListener(aVoid -> {
-                Toast.makeText(context, "Item removed from cart!", Toast.LENGTH_SHORT).show();
-              })
               .addOnFailureListener(e -> {
                 Toast.makeText(context, "Failed to remove item from cart.", Toast.LENGTH_SHORT).show();
               });
@@ -134,7 +129,6 @@ public class ViewAllAdapters extends RecyclerView.Adapter<ViewAllAdapters.ViewHo
             db.collection("cart").document(document.getId())
               .update(updatedCartItem)
               .addOnSuccessListener(aVoid -> {
-//                Toast.makeText(context, "Quantity updated!", Toast.LENGTH_SHORT).show();
                 holder.qty.setText(String.valueOf(newQuantity));
               })
               .addOnFailureListener(e -> {
