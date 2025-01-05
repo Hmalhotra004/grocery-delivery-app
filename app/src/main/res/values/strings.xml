@@ -46,5 +46,6 @@
     <string name="DeliveryCharge">Delivery Charge</string>
     <string name="GrandTotal">Grand Total</string>
     <string name="PlaceOrder">Place Order</string>
+    <string name="noItemCart">No Items in Cart</string>
 
 </resources>
