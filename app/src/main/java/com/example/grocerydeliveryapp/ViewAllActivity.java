@@ -70,6 +70,10 @@ public class ViewAllActivity extends AppCompatActivity {
           if (task.isSuccessful()) {
             for (QueryDocumentSnapshot document : task.getResult()) {
               ViewAllModel product = document.toObject(ViewAllModel.class);
+
+              // Set the productId to the Firestore document ID
+              product.setProductId(document.getId());
+
               viewAllModelList.add(product);
             }
 

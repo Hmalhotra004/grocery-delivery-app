@@ -85,6 +85,7 @@
                             android:layout_height="wrap_content"
                             android:paddingHorizontal="3dp"
                             android:text="2"
+                            android:textColor="@color/black"
                             android:textSize="18sp" />
 
                         <ImageButton

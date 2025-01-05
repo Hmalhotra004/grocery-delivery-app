@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Grocery Delivery App</string>
+    <string name="app_name">Eatly</string>
     <string name="HomeIcon">Home</string>
     <string name="OrdersIcon">Orders</string>
     <string name="CartIcon">Cart</string>
@@ -40,5 +40,11 @@
     <string name="atc">Add to Cart</string>
     <string name="Fruits">Fruits</string>
     <string name="Products">Products</string>
+    <string name="Bill">Bill Details</string>
+    <string name="ItemsTotal">Items Total</string>
+    <string name="HandlingCharge">Handling Charge</string>
+    <string name="DeliveryCharge">Delivery Charge</string>
+    <string name="GrandTotal">Grand Total</string>
+    <string name="PlaceOrder">Place Order</string>
 
 </resources>

@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.grocerydeliveryapp.adapters.CartAdapters;
 import com.example.grocerydeliveryapp.models.CartModel;
@@ -39,8 +41,15 @@ public class CartFragment extends Fragment {
     fragment.setArguments(args);
     return fragment;
   }
-  List<CartModel> cartModelList;
-  CartAdapters cartAdapters;
+
+  public List<CartModel> cartModelList;
+  public CartAdapters cartAdapters;
+  public FirebaseFirestore db;
+  public FirebaseAuth auth;
+  public LinearLayout billDetails;
+  public TextView fallback,itemsTotalTextView,grandTotalTextView;
+  public double handlingCharge = 5.0;
+  public double deliveryCharge = 25.0;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -50,8 +59,6 @@ public class CartFragment extends Fragment {
       mParam2 = getArguments().getString(ARG_PARAM2);
     }
   }
-  RecyclerView cartRecyclerView;
-  FirebaseFirestore db;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,9 +66,15 @@ public class CartFragment extends Fragment {
     View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
     db = FirebaseFirestore.getInstance();
+    auth = FirebaseAuth.getInstance();
 
-    cartRecyclerView = view.findViewById(R.id.cartItemRec);
+    fallback = view.findViewById(R.id.fallbackCart);
+    billDetails = view.findViewById(R.id.billDetailsL);
 
+     itemsTotalTextView = view.findViewById(R.id.cartItemsTotal);
+     grandTotalTextView = view.findViewById(R.id.grandTotal);
+
+    RecyclerView cartRecyclerView = view.findViewById(R.id.cartItemRec);
     cartRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
     cartModelList = new ArrayList<>();
@@ -69,8 +82,59 @@ public class CartFragment extends Fragment {
 
     cartRecyclerView.setAdapter(cartAdapters);
 
+    loadCartItems();
 
     return view;
   }
-}
 
+  private void loadCartItems() {
+    String userId = auth.getCurrentUser() != null ? auth.getCurrentUser().getUid() : null;
+
+    if (userId == null) {
+      Intent intent = new Intent(getActivity(), LoginActivity.class);
+      startActivity(intent);
+      return;
+    }
+
+    db.collection("cart")
+      .whereEqualTo("userId", userId)
+      .addSnapshotListener((snapshots, error) -> {
+        if (error != null) {
+          Toast.makeText(getContext(), "Failed to load cart items.", Toast.LENGTH_SHORT).show();
+          return;
+        }
+
+        if (snapshots != null) {
+          cartModelList.clear();
+          double itemsTotal = 0.0;
+
+          for (QueryDocumentSnapshot document : snapshots) {
+            CartModel cartItem = document.toObject(CartModel.class);
+            cartItem.setProductId(document.getId());
+            cartModelList.add(cartItem);
+
+            double price = cartItem.getPrice();
+            int quantity = cartItem.getQuantity();
+            itemsTotal += price * quantity;
+          }
+
+          cartAdapters.notifyDataSetChanged();
+
+          if (cartModelList.isEmpty()) {
+            // Show fallback message and hide bill details
+            fallback.setVisibility(View.VISIBLE);
+            fallback.setText("No items in your cart.");
+            billDetails.setVisibility(View.GONE);
+          } else {
+            // Hide fallback message and show bill details
+            fallback.setVisibility(View.GONE);
+            billDetails.setVisibility(View.VISIBLE);
+
+            double grandTotal = itemsTotal + handlingCharge + deliveryCharge;
+            itemsTotalTextView.setText(String.format("₹%.2f", itemsTotal));
+            grandTotalTextView.setText(String.format("₹%.2f", grandTotal));
+          }
+        }
+      });
+  }
+}

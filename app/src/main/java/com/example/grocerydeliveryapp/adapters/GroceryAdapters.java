@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.grocerydeliveryapp.R;
 import com.example.grocerydeliveryapp.ViewAllActivity;
 import com.example.grocerydeliveryapp.models.GroceryModel;
-import com.example.grocerydeliveryapp.utils.CheckItem;
 
 import java.util.List;
 
