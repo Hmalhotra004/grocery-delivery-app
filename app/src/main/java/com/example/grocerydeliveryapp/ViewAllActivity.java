@@ -1,6 +1,9 @@
 package com.example.grocerydeliveryapp;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,13 +27,15 @@ import java.util.List;
 
 public class ViewAllActivity extends AppCompatActivity {
 
-  List<ViewAllModel> viewAllModelList;
-  ViewAllAdapters viewAllAdapters;
+  private List<ViewAllModel> viewAllModelList;
+  private ViewAllAdapters viewAllAdapters;
 
-  RecyclerView viewAllRec;
-  Toolbar title;
+  private RecyclerView viewAllRec;
+  private Toolbar title;
+  private ProgressBar viewAllLoader;
+  private LinearLayout viewAllContent;
 
-  FirebaseFirestore db;
+  private FirebaseFirestore db;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -46,14 +51,21 @@ public class ViewAllActivity extends AppCompatActivity {
     String productType = getIntent().getStringExtra("type");
     String pageTitle = getIntent().getStringExtra("title");
 
+    // Initialize Views
     title = findViewById(R.id.viewAlltoolbar);
+    viewAllRec = findViewById(R.id.viewAllRec);
+    viewAllLoader = findViewById(R.id.viewAllLoader);
+    viewAllContent = findViewById(R.id.viewAllContent);
+
     setSupportActionBar(title);
     getSupportActionBar().setTitle(pageTitle);
 
-    viewAllRec = findViewById(R.id.viewAllRec);
     viewAllRec.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL, false));
 
     db = FirebaseFirestore.getInstance();
+
+    // Show loader and hide content
+    showLoading(true);
 
     fetchProductsByType(productType);
   }
@@ -79,10 +91,21 @@ public class ViewAllActivity extends AppCompatActivity {
 
             viewAllAdapters = new ViewAllAdapters(ViewAllActivity.this, viewAllModelList);
             viewAllRec.setAdapter(viewAllAdapters);
+
+            // Hide loader and show content
+            showLoading(false);
           } else {
             task.getException().printStackTrace();
+
+            // Handle error case, hide loader and show empty content if needed
+            showLoading(false);
           }
         }
       });
+  }
+
+  private void showLoading(boolean isLoading) {
+    viewAllLoader.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+    viewAllContent.setVisibility(isLoading ? View.GONE : View.VISIBLE);
   }
 }
