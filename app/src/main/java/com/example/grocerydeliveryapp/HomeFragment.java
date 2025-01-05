@@ -1,10 +1,11 @@
 package com.example.grocerydeliveryapp;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.ScrollView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -19,7 +20,6 @@ import com.example.grocerydeliveryapp.models.PopularModel;
 import com.example.grocerydeliveryapp.models.SnackModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -29,18 +29,20 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
-  List<PopularModel> popularModelList;
-  PopularAdapters popularAdapters;
+  private List<PopularModel> popularModelList;
+  private PopularAdapters popularAdapters;
 
-  List<GroceryModel> groceryKitchens;
-  GroceryAdapters groceryKitchenAdapters;
+  private List<GroceryModel> groceryKitchens;
+  private GroceryAdapters groceryKitchenAdapters;
 
-  List<SnackModel> snackList;
-  SnackAdapters snackAdapters;
+  private List<SnackModel> snackList;
+  private SnackAdapters snackAdapters;
 
-  RecyclerView PopRecyclerView, GroceryRecyclerView, SnackRecyclerView;
+  private RecyclerView popRecyclerView, groceryRecyclerView, snackRecyclerView;
+  private ProgressBar homeLoader;
+  private ScrollView homeContent;
 
-  FirebaseFirestore db;
+  private FirebaseFirestore db;
 
   public HomeFragment() {
     // Required empty public constructor
@@ -58,13 +60,16 @@ public class HomeFragment extends Fragment {
 
     db = FirebaseFirestore.getInstance();
 
-    PopRecyclerView = view.findViewById(R.id.popularRec);
-    GroceryRecyclerView = view.findViewById(R.id.GroceryKitchenRec);
-    SnackRecyclerView = view.findViewById(R.id.SnackRec);
+    homeLoader = view.findViewById(R.id.homeLoader);
+    homeContent = view.findViewById(R.id.homeContent);
 
-    PopRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-    GroceryRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
-    SnackRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+    popRecyclerView = view.findViewById(R.id.popularRec);
+    groceryRecyclerView = view.findViewById(R.id.GroceryKitchenRec);
+    snackRecyclerView = view.findViewById(R.id.SnackRec);
+
+    popRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+    groceryRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
+    snackRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 3));
 
     popularModelList = new ArrayList<>();
     groceryKitchens = new ArrayList<>();
@@ -74,10 +79,11 @@ public class HomeFragment extends Fragment {
     groceryKitchenAdapters = new GroceryAdapters(getActivity(), groceryKitchens);
     snackAdapters = new SnackAdapters(getActivity(), snackList);
 
-    PopRecyclerView.setAdapter(popularAdapters);
-    GroceryRecyclerView.setAdapter(groceryKitchenAdapters);
-    SnackRecyclerView.setAdapter(snackAdapters);
+    popRecyclerView.setAdapter(popularAdapters);
+    groceryRecyclerView.setAdapter(groceryKitchenAdapters);
+    snackRecyclerView.setAdapter(snackAdapters);
 
+    showLoading(true);
 
     fetchPopularItems();
     fetchGroceryItems();
@@ -91,18 +97,13 @@ public class HomeFragment extends Fragment {
       @Override
       public void onComplete(@NonNull Task<QuerySnapshot> task) {
         if (task.isSuccessful()) {
-          try {
-            for (QueryDocumentSnapshot doc : task.getResult()) {
-              PopularModel popularModel = doc.toObject(PopularModel.class);
-              popularModelList.add(popularModel);
-            }
-            popularAdapters.notifyDataSetChanged();
-          } catch (Exception e) {
-            Log.e("Firestore Error", "Error parsing data", e);
+          for (QueryDocumentSnapshot doc : task.getResult()) {
+            PopularModel popularModel = doc.toObject(PopularModel.class);
+            popularModelList.add(popularModel);
           }
-        } else {
-          Log.e("Firestore Error", "Failed to fetch data", task.getException());
+          popularAdapters.notifyDataSetChanged();
         }
+        checkDataFetchComplete();
       }
     });
   }
@@ -112,18 +113,13 @@ public class HomeFragment extends Fragment {
       @Override
       public void onComplete(@NonNull Task<QuerySnapshot> task) {
         if (task.isSuccessful()) {
-          try {
-            for (QueryDocumentSnapshot doc : task.getResult()) {
-              GroceryModel groceryModel = doc.toObject(GroceryModel.class);
-              groceryKitchens.add(groceryModel);
-            }
-            groceryKitchenAdapters.notifyDataSetChanged();
-          } catch (Exception e) {
-            Log.e("Firestore Error", "Error parsing data", e);
+          for (QueryDocumentSnapshot doc : task.getResult()) {
+            GroceryModel groceryModel = doc.toObject(GroceryModel.class);
+            groceryKitchens.add(groceryModel);
           }
-        } else {
-          Log.e("Firestore Error", "Failed to fetch data", task.getException());
+          groceryKitchenAdapters.notifyDataSetChanged();
         }
+        checkDataFetchComplete();
       }
     });
   }
@@ -133,19 +129,25 @@ public class HomeFragment extends Fragment {
       @Override
       public void onComplete(@NonNull Task<QuerySnapshot> task) {
         if (task.isSuccessful()) {
-          try {
-            for (QueryDocumentSnapshot doc : task.getResult()) {
-              SnackModel snackModel = doc.toObject(SnackModel.class);
-              snackList.add(snackModel);
-            }
-            snackAdapters.notifyDataSetChanged();
-          } catch (Exception e) {
-            Log.e("Firestore Error", "Error parsing data", e);
+          for (QueryDocumentSnapshot doc : task.getResult()) {
+            SnackModel snackModel = doc.toObject(SnackModel.class);
+            snackList.add(snackModel);
           }
-        } else {
-          Log.e("Firestore Error", "Failed to fetch data", task.getException());
+          snackAdapters.notifyDataSetChanged();
         }
+        checkDataFetchComplete();
       }
     });
+  }
+
+  private void checkDataFetchComplete() {
+    if (!popularModelList.isEmpty() && !groceryKitchens.isEmpty() && !snackList.isEmpty()) {
+      showLoading(false);
+    }
+  }
+
+  private void showLoading(boolean isLoading) {
+    homeLoader.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+    homeContent.setVisibility(isLoading ? View.GONE : View.VISIBLE);
   }
 }
