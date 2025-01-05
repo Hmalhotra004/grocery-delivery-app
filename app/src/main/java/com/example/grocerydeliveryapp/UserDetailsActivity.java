@@ -2,8 +2,11 @@ package com.example.grocerydeliveryapp;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -22,16 +25,19 @@ import java.util.Map;
 
 public class UserDetailsActivity extends AppCompatActivity {
 
-  public Button save;
-  public EditText name, phone;
-  public FirebaseAuth firebaseAuth;
-  public FirebaseFirestore firestore;
+  private Button save;
+  private EditText name, phone;
+  private FirebaseAuth firebaseAuth;
+  private FirebaseFirestore firestore;
+  private LinearLayout userDetailsForm;
+  private ProgressBar userDetailsLoader;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     EdgeToEdge.enable(this);
     setContentView(R.layout.activity_user_details);
+
     ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
       Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
       v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -44,12 +50,15 @@ public class UserDetailsActivity extends AppCompatActivity {
     save = findViewById(R.id.saveBtnD);
     phone = findViewById(R.id.phoneD);
     name = findViewById(R.id.nameD);
+    userDetailsForm = findViewById(R.id.userDetailsForm);
+    userDetailsLoader = findViewById(R.id.userDetailsLoader);
 
     FirebaseUser currentUser = firebaseAuth.getCurrentUser();
     if (currentUser != null) {
       String userId = currentUser.getUid();
 
       DocumentReference userRef = firestore.collection("users").document(userId);
+
       userRef.get().addOnSuccessListener(documentSnapshot -> {
         if (documentSnapshot.exists()) {
           String userName = documentSnapshot.getString("name");
@@ -61,10 +70,17 @@ public class UserDetailsActivity extends AppCompatActivity {
           if (userPhone != null) {
             phone.setText(userPhone);
           }
+
+          // Show form and hide loader
+          showLoading(false);
         } else {
           Log.e("UserDetails", "Document does not exist");
+          showLoading(false);
         }
-      }).addOnFailureListener(e -> Log.e("UserDetails", "Error retrieving document", e));
+      }).addOnFailureListener(e -> {
+        Log.e("UserDetails", "Error retrieving document", e);
+        showLoading(false);
+      });
 
       save.setOnClickListener(v -> {
         String updatedName = name.getText().toString().trim();
@@ -85,14 +101,17 @@ public class UserDetailsActivity extends AppCompatActivity {
         updatedData.put("phone", updatedPhone);
 
         userRef.update(updatedData)
-          .addOnSuccessListener(aVoid -> {
-            Toast.makeText(UserDetailsActivity.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
-          })
+          .addOnSuccessListener(aVoid -> Toast.makeText(UserDetailsActivity.this, "Profile updated successfully", Toast.LENGTH_SHORT).show())
           .addOnFailureListener(e -> {
             Log.e("UserDetails", "Error updating document", e);
             Toast.makeText(UserDetailsActivity.this, "Failed to update profile", Toast.LENGTH_SHORT).show();
           });
       });
     }
+  }
+
+  private void showLoading(boolean isLoading) {
+    userDetailsLoader.setVisibility(isLoading ? View.VISIBLE : View.GONE);
+    userDetailsForm.setVisibility(isLoading ? View.GONE : View.VISIBLE);
   }
 }
