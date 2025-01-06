@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class CartFragment extends Fragment {
   private static final String ARG_PARAM1 = "param1";
@@ -48,6 +50,7 @@ public class CartFragment extends Fragment {
   public FirebaseAuth auth;
   public LinearLayout billDetails;
   public TextView fallback,itemsTotalTextView,grandTotalTextView;
+  public Button placeOrder;
   public double handlingCharge = 5.0;
   public double deliveryCharge = 25.0;
 
@@ -71,6 +74,8 @@ public class CartFragment extends Fragment {
     fallback = view.findViewById(R.id.fallbackCart);
     billDetails = view.findViewById(R.id.billDetailsL);
 
+    placeOrder = view.findViewById(R.id.placeOrderBtn);
+
      itemsTotalTextView = view.findViewById(R.id.cartItemsTotal);
      grandTotalTextView = view.findViewById(R.id.grandTotal);
 
@@ -83,6 +88,14 @@ public class CartFragment extends Fragment {
     cartRecyclerView.setAdapter(cartAdapters);
 
     loadCartItems();
+
+    placeOrder.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        UUID uuid = UUID.randomUUID();
+        String orderId = uuid.toString();
+      }
+    });
 
     return view;
   }
