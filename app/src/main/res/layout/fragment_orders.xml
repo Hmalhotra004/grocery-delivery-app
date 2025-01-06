@@ -35,7 +35,6 @@
                 android:layout_marginBottom="20dp"
                 android:background="@color/black" />
 
-
             <LinearLayout
                 android:id="@+id/orders"
                 android:layout_width="match_parent"
