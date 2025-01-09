@@ -62,12 +62,12 @@ public class OrdersFragment extends Fragment {
   }
 
   private void fetchOrders() {
-    String userId = auth.getCurrentUser().getUid(); // Get the current user's ID
-
-    CollectionReference ordersRef = db.collection("orders");
+    String userId = auth.getCurrentUser().getUid();
 
     // Query orders for the current user
-    ordersRef.whereEqualTo("userId", userId).get()
+    db.collection("orders")
+      .whereEqualTo("userId", userId)
+      .get()
       .addOnSuccessListener(queryDocumentSnapshots -> {
         orderModelList.clear();
 
