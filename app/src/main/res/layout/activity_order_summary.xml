@@ -1,221 +1,215 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:background="@color/slate200"
-    android:orientation="vertical" >
+    android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/slate200"
-        android:gravity="center"
-        android:minHeight="?attr/actionBarSize"
-        android:theme="?attr/actionBarTheme"
-        app:title="Order Summary"
-        app:titleTextColor="@color/black" />
+        android:orientation="vertical" >
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="20dp"
-        android:background="@color/black" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
-        <!--parent-->
-        <LinearLayout
-            android:id="@+id/orderSummary"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:orientation="vertical">
+            android:background="@color/slate200"
+            android:gravity="center"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:title="Order Summary"
+            app:titleTextColor="@color/black" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/black" />
+
+            <!--parent-->
             <LinearLayout
+                android:id="@+id/orderSummary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/orderSumItems"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:textColor="@color/black"
-                    android:text="5"/>
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="18sp"
-                    android:layout_marginStart="5dp"
-                    android:textColor="@color/black"
-                    android:text="Items in this order"/>
-
-            </LinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/orderSumRec"
-                android:layout_width="match_parent"
-                android:layout_margin="5dp"
-                android:layout_height="wrap_content"/>
-
-            <LinearLayout
-                android:id="@+id/billDetailsL"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:padding="10dp"
                 android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="5dp"
-                    android:text="@string/Bill"
-                    />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/rounded_background_slate300"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginVertical="5dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="18sp"
-                            android:textColor="@color/black"
-                            android:text="@string/ItemsTotal"
-                            />
-
-                        <TextView
-                            android:id="@+id/cartItemsTotal"
-                            android:layout_width="match_parent"
-                            android:gravity="end"
-                            android:textSize="15sp"
-                            android:textColor="@color/black"
-                            android:layout_height="match_parent"
-                            android:layout_marginHorizontal="10dp"
-                            android:text="15"
-                            />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginVertical="5dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="18sp"
-                            android:textColor="@color/black"
-                            android:text="@string/HandlingCharge"
-                            />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:gravity="end"
-                            android:textColor="@color/black"
-                            android:layout_height="match_parent"
-                            android:layout_marginHorizontal="10dp"
-                            android:text="₹5"
-                            />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginVertical="5dp"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="18sp"
-                            android:textColor="@color/black"
-                            android:text="@string/DeliveryCharge"
-                            />
-
-                        <TextView
-                            android:id="@+id/deliveryCharge"
-                            android:layout_width="match_parent"
-                            android:gravity="end"
-                            android:textColor="@color/black"
-                            android:layout_height="match_parent"
-                            android:layout_marginHorizontal="10dp"
-                            android:text="₹25"
-                            />
-
-                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/orderSumItems"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"
+                        android:text="5"/>
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:gravity="center"
+                        android:layout_height="wrap_content"
+                        android:textSize="18sp"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/black"
+                        android:text="Items in this order"/>
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/orderSumRec"
+                    android:layout_width="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:id="@+id/billDetailsL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="5dp"
-                        android:background="@color/slate200" />
+                        android:text="@string/Bill"
+                        />
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginVertical="5dp"
-                        android:orientation="horizontal">
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounded_background_slate300"
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            android:text="@string/GrandTotal"
-                            />
-
-                        <TextView
-                            android:id="@+id/grandTotal"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:gravity="end"
                             android:layout_height="match_parent"
-                            android:layout_marginHorizontal="10dp"
-                            android:textStyle="bold"
-                            android:textColor="@color/black"
-                            android:text="25"
-                            />
+                            android:layout_marginStart="5dp"
+                            android:layout_marginVertical="5dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="18sp"
+                                android:textColor="@color/black"
+                                android:text="@string/ItemsTotal"
+                                />
+
+                            <TextView
+                                android:id="@+id/cartItemsTotal"
+                                android:layout_width="match_parent"
+                                android:gravity="end"
+                                android:textSize="15sp"
+                                android:textColor="@color/black"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="10dp"
+                                android:text="15"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginVertical="5dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="18sp"
+                                android:textColor="@color/black"
+                                android:text="@string/HandlingCharge"
+                                />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:gravity="end"
+                                android:textColor="@color/black"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="10dp"
+                                android:text="₹5"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginVertical="5dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="18sp"
+                                android:textColor="@color/black"
+                                android:text="@string/DeliveryCharge"
+                                />
+
+                            <TextView
+                                android:id="@+id/deliveryCharge"
+                                android:layout_width="match_parent"
+                                android:gravity="end"
+                                android:textColor="@color/black"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="10dp"
+                                android:text="₹25"
+                                />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:gravity="center"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@color/slate200" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginVertical="5dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textSize="18sp"
+                                android:textStyle="bold"
+                                android:textColor="@color/black"
+                                android:text="@string/GrandTotal"
+                                />
+
+                            <TextView
+                                android:id="@+id/grandTotal"
+                                android:layout_width="match_parent"
+                                android:gravity="end"
+                                android:layout_height="match_parent"
+                                android:layout_marginHorizontal="10dp"
+                                android:textStyle="bold"
+                                android:textColor="@color/black"
+                                android:text="25"
+                                />
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
                 </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </ScrollView>
 
                 <Button
                     android:id="@+id/repeatOrderBtn"
@@ -226,7 +220,10 @@
                     android:text="@string/RepeatOrder"
                     android:textSize="20sp"
                     android:textColor="@color/slate300"
-                    android:layout_marginHorizontal="10dp"
                     app:cornerRadius="8dp" />
 
-</LinearLayout>
+            </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

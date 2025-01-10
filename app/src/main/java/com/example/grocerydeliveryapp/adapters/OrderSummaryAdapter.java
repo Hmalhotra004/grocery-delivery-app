@@ -41,9 +41,9 @@ public class OrderSummaryAdapter extends RecyclerView.Adapter<OrderSummaryAdapte
     if (product != null) {
       // Set product details
       holder.productNameTextView.setText(product.getName());
-//      holder.productPriceTextView.setText("₹" + product.getPrice());
-//      holder.productQuantityTextView.setText(product.getDescription() + product.getQuantity());
-//      holder.orderSumImg.setImageResource(getImageResource(product.getImageUrl()));
+      holder.productPriceTextView.setText("₹" + product.getPrice());
+      holder.productQuantityTextView.setText(product.getDescription() + " x " +product.getQuantity());
+      holder.orderSumImg.setImageResource(getImageResource(product.getImageUrl()));
     }
   }
 

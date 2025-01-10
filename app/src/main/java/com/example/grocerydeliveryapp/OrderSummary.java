@@ -20,6 +20,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class OrderSummary extends AppCompatActivity {
 
@@ -69,16 +70,27 @@ public class OrderSummary extends AppCompatActivity {
         if (task.isSuccessful()) {
           DocumentSnapshot documentSnapshot = task.getResult();
           if (documentSnapshot != null && documentSnapshot.exists()) {
+            List<Map<String, Object>> productsList =
+              (List<Map<String, Object>>) documentSnapshot.get("products");
 
-            List<ProductOrdersModel> productsList = (List<ProductOrdersModel>) documentSnapshot.get("products");
             if (productsList != null) {
               products.clear();
-              products.addAll(productsList);
-
+              for (Map<String, Object> productMap : productsList) {
+                ProductOrdersModel product = new ProductOrdersModel(
+                  (String) productMap.get("productId"),
+                  (String) productMap.get("imageUrl"),
+                  (String) productMap.get("description"),
+                  (String) productMap.get("name"),
+                  ((Number) productMap.get("quantity")).intValue(),
+                  ((Number) productMap.get("price")).intValue()
+                );
+                products.add(product);
+              }
               orderSummaryAdapter.notifyDataSetChanged();
-
               calculateTotals();
             }
+          } else {
+            Log.e("OrderSummary", "Document not found or empty");
           }
         } else {
           Log.e("OrderSummary", "Error fetching order data", task.getException());
