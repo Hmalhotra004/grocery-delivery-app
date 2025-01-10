@@ -6,11 +6,14 @@ public class ProductOrdersModel {
 
   public ProductOrdersModel() {}
 
-//  public ProductOrdersModel(String productId, int quantity,String imageUrl) {
-//    this.productId = productId;
-//    this.quantity = quantity;
-//    this.imageUrl = imageUrl;
-//  }
+  public ProductOrdersModel(String productId, String imageUrl, String description, String name, int quantity, int price) {
+    this.productId = productId;
+    this.imageUrl = imageUrl;
+    this.description = description;
+    this.name = name;
+    this.quantity = quantity;
+    this.price = price;
+  }
 
   public String getDescription() {
     return description;
