@@ -22,7 +22,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class CartFragment extends Fragment {
@@ -92,8 +94,57 @@ public class CartFragment extends Fragment {
     placeOrder.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        UUID uuid = UUID.randomUUID();
-        String orderId = uuid.toString();
+        String userId = auth.getCurrentUser() != null ? auth.getCurrentUser().getUid() : null;
+
+        if (userId == null) {
+          Intent intent = new Intent(getActivity(), LoginActivity.class);
+          startActivity(intent);
+          return;
+        }
+
+        if (cartModelList.isEmpty()) {
+          Toast.makeText(getContext(), "Cart is empty.", Toast.LENGTH_SHORT).show();
+          return;
+        }
+
+        String orderId = UUID.randomUUID().toString();
+        List<Map<String, Object>> products = new ArrayList<>();
+        double totalPrice = 0.0;
+
+        // Prepare product data
+        for (CartModel cartItem : cartModelList) {
+          Map<String, Object> product = new HashMap<>();
+          product.put("productId", cartItem.getProductId());
+          product.put("quantity", String.valueOf(cartItem.getQuantity()));
+          products.add(product);
+
+          totalPrice += cartItem.getPrice() * cartItem.getQuantity();
+        }
+
+        // Calculate grand total
+        double grandTotal = totalPrice + handlingCharge + deliveryCharge;
+
+        // Create order data
+        Map<String, Object> order = new HashMap<>();
+        order.put("date", "6 Jan 2025"); // You can dynamically fetch the current date
+        order.put("orderId", orderId);
+        order.put("products", products);
+        order.put("time", "10 am"); // Dynamically fetch if needed
+        order.put("totalPrice", String.format("%.2f", grandTotal));
+        order.put("userId", userId);
+
+        // Add to "orders" collection
+        db.collection("orders").document(orderId)
+          .set(order)
+          .addOnSuccessListener(aVoid -> {
+            Toast.makeText(getContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
+
+            // Clear the cart after placing the order
+            clearCart(userId);
+          })
+          .addOnFailureListener(e -> {
+            Toast.makeText(getContext(), "Failed to place the order.", Toast.LENGTH_SHORT).show();
+          });
       }
     });
 
@@ -148,6 +199,25 @@ public class CartFragment extends Fragment {
             grandTotalTextView.setText(String.format("₹%.2f", grandTotal));
           }
         }
+      });
+  }
+
+  private void clearCart(String userId) {
+    db.collection("cart")
+      .whereEqualTo("userId", userId)
+      .get()
+      .addOnSuccessListener(querySnapshot -> {
+        for (QueryDocumentSnapshot document : querySnapshot) {
+          document.getReference().delete();
+        }
+
+        cartModelList.clear();
+        cartAdapters.notifyDataSetChanged();
+        fallback.setVisibility(View.VISIBLE);
+        billDetails.setVisibility(View.GONE);
+      })
+      .addOnFailureListener(e -> {
+        Toast.makeText(getContext(), "Failed to clear the cart.", Toast.LENGTH_SHORT).show();
       });
   }
 }
