@@ -81,7 +81,7 @@ public class OrdersFragment extends Fragment {
 
           // Parse order details
           order.setOrderId(document.getId());
-          order.setTotalPrice(Integer.parseInt(document.getString("totalPrice")));
+          order.setTotalPrice(document.getString("totalPrice"));
           order.setDate(document.getString("date"));
           order.setTime(document.getString("time"));
 

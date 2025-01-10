@@ -3,8 +3,7 @@ package com.example.grocerydeliveryapp.models;
 import java.util.List;
 
 public class OrderModel {
-  public String orderId, date, time;
-  public int totalPrice;
+  public String orderId, totalPrice, date, time;
 //  public List<ProductOrdersModel> products;
 
   public OrderModel() {}
@@ -17,11 +16,11 @@ public class OrderModel {
     this.orderId = orderId;
   }
 
-  public Integer getTotalPrice() {
+  public String getTotalPrice() {
     return totalPrice;
   }
 
-  public void setTotalPrice(Integer totalPrice) {
+  public void setTotalPrice(String totalPrice) {
     this.totalPrice = totalPrice;
   }
 

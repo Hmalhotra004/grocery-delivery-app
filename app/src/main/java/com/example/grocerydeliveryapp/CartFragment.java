@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 public class CartFragment extends Fragment {
 
@@ -114,15 +115,18 @@ public class CartFragment extends Fragment {
         String currentDate = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(new Date());
         String currentTime = new SimpleDateFormat("h:mm a", Locale.getDefault()).format(new Date());
 
+        String orderId = UUID.randomUUID().toString();
+
         Map<String, Object> order = new HashMap<>();
+        order.put("orderId", orderId);
         order.put("date", currentDate);
         order.put("products", products);
         order.put("time", currentTime);
-        order.put("totalPrice", grandTotal);
+        order.put("totalPrice", String.valueOf(grandTotal));
         order.put("userId", userId);
 
-        db.collection("orders")
-          .add(order)
+        db.collection("orders").document(orderId)
+          .set(order)
           .addOnSuccessListener(documentReference -> {
             Toast.makeText(getContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
 
