@@ -16,6 +16,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <com.makeramen.roundedimageview.RoundedImageView
@@ -28,36 +29,55 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginHorizontal="5dp"
+                android:gravity="center"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/orderTotal"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="5dp"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
                     android:textColor="@color/black"
-                    android:text="400" />
+                    android:text="@string/Delivered"
+                    />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:text="@string/dot" />
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/orderDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:layout_marginHorizontal="5dp"
-                    android:text="30 Dec," />
+                    <TextView
+                        android:id="@+id/orderTotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="400" />
 
-                <TextView
-                    android:id="@+id/orderTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:text="8:32 am" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_marginStart="5dp"
+                        android:text="@string/dot" />
+
+                    <TextView
+                        android:id="@+id/orderDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_marginHorizontal="5dp"
+                        android:text="30 Dec," />
+
+                    <TextView
+                        android:id="@+id/orderTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="8:32 am" />
+
+                </LinearLayout>
+
 
             </LinearLayout>
 
