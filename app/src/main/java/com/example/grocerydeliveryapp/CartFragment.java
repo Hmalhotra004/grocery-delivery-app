@@ -1,6 +1,7 @@
 package com.example.grocerydeliveryapp;
 
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -22,28 +23,16 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
-import java.util.UUID;
 
 public class CartFragment extends Fragment {
-  private static final String ARG_PARAM1 = "param1";
-  private static final String ARG_PARAM2 = "param2";
-  private String mParam1;
-  private String mParam2;
 
   public CartFragment() {
     // Required empty public constructor
-  }
-
-  public static CartFragment newInstance(String param1, String param2) {
-    CartFragment fragment = new CartFragment();
-    Bundle args = new Bundle();
-    args.putString(ARG_PARAM1, param1);
-    args.putString(ARG_PARAM2, param2);
-    fragment.setArguments(args);
-    return fragment;
   }
 
   public List<CartModel> cartModelList;
@@ -59,10 +48,6 @@ public class CartFragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    if (getArguments() != null) {
-      mParam1 = getArguments().getString(ARG_PARAM1);
-      mParam2 = getArguments().getString(ARG_PARAM2);
-    }
   }
 
   @Override
@@ -107,7 +92,6 @@ public class CartFragment extends Fragment {
           return;
         }
 
-        String orderId = UUID.randomUUID().toString();
         List<Map<String, Object>> products = new ArrayList<>();
         double totalPrice = 0.0;
 
@@ -115,31 +99,34 @@ public class CartFragment extends Fragment {
         for (CartModel cartItem : cartModelList) {
           Map<String, Object> product = new HashMap<>();
           product.put("productId", cartItem.getProductId());
+          product.put("name", cartItem.getName());
+          product.put("description", cartItem.getDescription());
+          product.put("price", cartItem.getPrice());
+          product.put("imageUrl", cartItem.getImageUrl());
           product.put("quantity", String.valueOf(cartItem.getQuantity()));
           products.add(product);
 
           totalPrice += cartItem.getPrice() * cartItem.getQuantity();
         }
 
-        // Calculate grand total
         double grandTotal = totalPrice + handlingCharge + deliveryCharge;
 
-        // Create order data
+        String currentDate = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(new Date());
+        String currentTime = new SimpleDateFormat("h:mm a", Locale.getDefault()).format(new Date());
+
         Map<String, Object> order = new HashMap<>();
-        order.put("date", "6 Jan 2025"); // You can dynamically fetch the current date
-        order.put("orderId", orderId);
+        order.put("date", currentDate);
         order.put("products", products);
-        order.put("time", "10 am"); // Dynamically fetch if needed
+        order.put("time", currentTime);
         order.put("totalPrice", String.format("%.2f", grandTotal));
         order.put("userId", userId);
 
-        // Add to "orders" collection
-        db.collection("orders").document(orderId)
-          .set(order)
-          .addOnSuccessListener(aVoid -> {
+        db.collection("orders")
+          .add(order)
+          .addOnSuccessListener(documentReference -> {
+            String orderId = documentReference.getId();
             Toast.makeText(getContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
 
-            // Clear the cart after placing the order
             clearCart(userId);
           })
           .addOnFailureListener(e -> {
