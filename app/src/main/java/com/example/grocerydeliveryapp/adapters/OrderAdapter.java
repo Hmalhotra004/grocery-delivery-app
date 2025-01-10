@@ -1,15 +1,18 @@
 package com.example.grocerydeliveryapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.grocerydeliveryapp.OrderSummary;
 import com.example.grocerydeliveryapp.R;
 import com.example.grocerydeliveryapp.models.OrderModel;
 import com.example.grocerydeliveryapp.models.ProductOrdersModel;
@@ -56,6 +59,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
 //        );
 //      }
 //      holder.productsRecyclerView.setAdapter(productAdapter);
+
+      holder.orderCard.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+          Intent intent = new Intent(context, OrderSummary.class);
+          intent.putExtra("orderId", order.getOrderId());
+          context.startActivity(intent);
+        }
+      });
     }
   }
 
@@ -68,12 +80,14 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
   public static class OrderViewHolder extends RecyclerView.ViewHolder {
     TextView dateTextView, timeTextView, totalPriceTextView;
     RecyclerView productsRecyclerView;
+    CardView orderCard;
 
     public OrderViewHolder(@NonNull View itemView) {
       super(itemView);
       dateTextView = itemView.findViewById(R.id.orderDate);
       timeTextView = itemView.findViewById(R.id.orderTime);
       totalPriceTextView = itemView.findViewById(R.id.orderTotal);
+      orderCard = itemView.findViewById(R.id.orderCard);
 //      productsRecyclerView = itemView.findViewById(R.id.orderProductsImg);
     }
   }
