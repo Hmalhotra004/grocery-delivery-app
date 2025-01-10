@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.grocerydeliveryapp.adapters.OrderAdapter;
@@ -29,6 +30,7 @@ public class OrdersFragment extends Fragment {
   private OrderAdapter orderAdapter;
   private FirebaseFirestore db;
   private FirebaseAuth auth;
+  private ProgressBar progressBar;
 
   public OrdersFragment() {
     // Required empty public constructor
@@ -48,6 +50,8 @@ public class OrdersFragment extends Fragment {
     // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_orders, container, false);
 
+    progressBar = view.findViewById(R.id.ordersLoader);
+
     RecyclerView ordersRecyclerView = view.findViewById(R.id.ordersRec);
     ordersRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
@@ -63,6 +67,8 @@ public class OrdersFragment extends Fragment {
 
   private void fetchOrders() {
     String userId = auth.getCurrentUser().getUid();
+
+    progressBar.setVisibility(View.VISIBLE);
 
     // Query orders for the current user
     db.collection("orders")
@@ -107,6 +113,7 @@ public class OrdersFragment extends Fragment {
 
         // Notify the adapter of the changes
         orderAdapter.notifyDataSetChanged();
+        progressBar.setVisibility(View.GONE);
       })
       .addOnFailureListener(e -> {
         Toast.makeText(getContext(), "Failed to fetch orders: " + e.getMessage(), Toast.LENGTH_SHORT).show();
