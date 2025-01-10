@@ -40,7 +40,6 @@ public class OrdersFragment extends Fragment {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    // Initialize Firebase
     db = FirebaseFirestore.getInstance();
     auth = FirebaseAuth.getInstance();
   }

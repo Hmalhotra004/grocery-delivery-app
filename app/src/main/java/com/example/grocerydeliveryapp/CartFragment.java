@@ -48,15 +48,15 @@ public class CartFragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
+    db = FirebaseFirestore.getInstance();
+    auth = FirebaseAuth.getInstance();
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_cart, container, false);
-
-    db = FirebaseFirestore.getInstance();
-    auth = FirebaseAuth.getInstance();
 
     fallback = view.findViewById(R.id.fallbackCart);
     billDetails = view.findViewById(R.id.billDetailsL);
