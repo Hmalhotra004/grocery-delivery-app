@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.UUID;
 
 public class CartFragment extends Fragment {
 
@@ -48,15 +49,15 @@ public class CartFragment extends Fragment {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
+    db = FirebaseFirestore.getInstance();
+    auth = FirebaseAuth.getInstance();
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_cart, container, false);
-
-    db = FirebaseFirestore.getInstance();
-    auth = FirebaseAuth.getInstance();
 
     fallback = view.findViewById(R.id.fallbackCart);
     billDetails = view.findViewById(R.id.billDetailsL);
@@ -103,7 +104,7 @@ public class CartFragment extends Fragment {
           product.put("description", cartItem.getDescription());
           product.put("price", cartItem.getPrice());
           product.put("imageUrl", cartItem.getImageUrl());
-          product.put("quantity", String.valueOf(cartItem.getQuantity()));
+          product.put("quantity", cartItem.getQuantity());
           products.add(product);
 
           totalPrice += cartItem.getPrice() * cartItem.getQuantity();
@@ -114,17 +115,19 @@ public class CartFragment extends Fragment {
         String currentDate = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(new Date());
         String currentTime = new SimpleDateFormat("h:mm a", Locale.getDefault()).format(new Date());
 
+        String orderId = UUID.randomUUID().toString();
+
         Map<String, Object> order = new HashMap<>();
+        order.put("orderId", orderId);
         order.put("date", currentDate);
         order.put("products", products);
         order.put("time", currentTime);
-        order.put("totalPrice", String.format("%.2f", grandTotal));
+        order.put("totalPrice", String.valueOf(grandTotal));
         order.put("userId", userId);
 
-        db.collection("orders")
-          .add(order)
+        db.collection("orders").document(orderId)
+          .set(order)
           .addOnSuccessListener(documentReference -> {
-            String orderId = documentReference.getId();
             Toast.makeText(getContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
 
             clearCart(userId);
