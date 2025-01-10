@@ -45,7 +45,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
 
     if (order != null) {
       // Set order details
-      holder.dateTextView.setText(order.getDate());
+      holder.dateTextView.setText(order.getDate()+",");
       holder.timeTextView.setText(order.getTime());
       holder.totalPriceTextView.setText("₹" + order.getTotalPrice());
 
