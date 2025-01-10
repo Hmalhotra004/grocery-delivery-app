@@ -103,7 +103,7 @@ public class CartFragment extends Fragment {
           product.put("description", cartItem.getDescription());
           product.put("price", cartItem.getPrice());
           product.put("imageUrl", cartItem.getImageUrl());
-          product.put("quantity", String.valueOf(cartItem.getQuantity()));
+          product.put("quantity", cartItem.getQuantity());
           products.add(product);
 
           totalPrice += cartItem.getPrice() * cartItem.getQuantity();
@@ -118,13 +118,12 @@ public class CartFragment extends Fragment {
         order.put("date", currentDate);
         order.put("products", products);
         order.put("time", currentTime);
-        order.put("totalPrice", String.format("%.2f", grandTotal));
+        order.put("totalPrice", grandTotal);
         order.put("userId", userId);
 
         db.collection("orders")
           .add(order)
           .addOnSuccessListener(documentReference -> {
-            String orderId = documentReference.getId();
             Toast.makeText(getContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
 
             clearCart(userId);
