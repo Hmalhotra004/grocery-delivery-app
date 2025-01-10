@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,7 +35,10 @@ public class OrderSummary extends AppCompatActivity {
   private double deliveryCharge = 25.0;
 
   private RecyclerView orderSummaryRecyclerView;
-  private TextView itemsTotalTextView, deliveryChargeTextView, grandTotalTextView;
+  private TextView itemsTotalTextView, deliveryChargeTextView, grandTotalTextView, orderSumItemsTextView;
+
+  LinearLayout orderSummary;
+  private ProgressBar progressBar;
 //  private Button repeatOrderButton;
 
   @Override
@@ -50,6 +55,9 @@ public class OrderSummary extends AppCompatActivity {
     itemsTotalTextView = findViewById(R.id.cartItemsTotal);
     deliveryChargeTextView = findViewById(R.id.deliveryCharge);
     grandTotalTextView = findViewById(R.id.grandTotal);
+    progressBar = findViewById(R.id.orderSumLoader);
+    orderSummary = findViewById(R.id.orderSummary);
+    orderSumItemsTextView = findViewById(R.id.orderSumItems);
 //    repeatOrderButton = findViewById(R.id.repeatOrderBtn);
 
     orderSummaryRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -63,6 +71,9 @@ public class OrderSummary extends AppCompatActivity {
   }
 
   private void fetchOrderSummary(String orderId) {
+    progressBar.setVisibility(View.VISIBLE);
+    orderSummary.setVisibility(View.GONE);
+
     db.collection("orders")
       .document(orderId)
       .get()
@@ -88,6 +99,13 @@ public class OrderSummary extends AppCompatActivity {
               }
               orderSummaryAdapter.notifyDataSetChanged();
               calculateTotals();
+              if(products.size() == 1){
+                orderSumItemsTextView.setText((products.size() + " Item in this order"));
+              } else {
+                orderSumItemsTextView.setText((products.size() + " Items in this order"));
+              }
+              progressBar.setVisibility(View.GONE);
+              orderSummary.setVisibility(View.VISIBLE);
             }
           } else {
             Log.e("OrderSummary", "Document not found or empty");
