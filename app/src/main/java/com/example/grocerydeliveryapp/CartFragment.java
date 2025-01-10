@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +41,8 @@ public class CartFragment extends Fragment {
   public CartAdapters cartAdapters;
   public FirebaseFirestore db;
   public FirebaseAuth auth;
-  public LinearLayout billDetails;
+  public LinearLayout billDetails, cartMain;
+  public ProgressBar loader;
   public TextView fallback,itemsTotalTextView,grandTotalTextView;
   public Button placeOrder;
   public double handlingCharge = 5.0;
@@ -61,6 +63,8 @@ public class CartFragment extends Fragment {
 
     fallback = view.findViewById(R.id.fallbackCart);
     billDetails = view.findViewById(R.id.billDetailsL);
+    cartMain = view.findViewById(R.id.cartMainL);
+    loader = view.findViewById(R.id.cartLoader);
 
     placeOrder = view.findViewById(R.id.placeOrderBtn);
 
@@ -144,6 +148,9 @@ public class CartFragment extends Fragment {
   private void loadCartItems() {
     String userId = auth.getCurrentUser() != null ? auth.getCurrentUser().getUid() : null;
 
+    loader.setVisibility(View.VISIBLE);
+    cartMain.setVisibility(View.GONE);
+
     if (userId == null) {
       Intent intent = new Intent(getActivity(), LoginActivity.class);
       startActivity(intent);
@@ -173,6 +180,8 @@ public class CartFragment extends Fragment {
           }
 
           cartAdapters.notifyDataSetChanged();
+          loader.setVisibility(View.GONE);
+          cartMain.setVisibility(View.VISIBLE);
 
           if (cartModelList.isEmpty()) {
             // Show fallback message and hide bill details

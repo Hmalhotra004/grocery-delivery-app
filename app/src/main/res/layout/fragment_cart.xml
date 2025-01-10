@@ -30,10 +30,13 @@
             android:layout_marginBottom="20dp"
             android:background="@color/black" />
 
+
         <LinearLayout
+            android:id="@+id/cartMainL"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:visibility="visible"
             android:padding="5dp">
 
             <TextView
@@ -43,27 +46,26 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:layout_marginStart="10dp"
-                android:text="@string/Products"
-                />
+                android:text="@string/Products" />
+
+                <TextView
+                    android:id="@+id/fallbackCart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:visibility="gone"
+                    android:text="@string/noItemCart"
+                    />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/cartItemRec"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp" />
-
-            <TextView
-                android:id="@+id/fallbackCart"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:layout_marginStart="10dp"
-                android:visibility="gone"
-                android:text="@string/Products"
-                />
 
             <LinearLayout
                 android:id="@+id/billDetailsL"
@@ -224,7 +226,16 @@
 
         </LinearLayout>
 
-            </LinearLayout>
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/cartLoader"
+            style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
     </LinearLayout>
 
 </ScrollView>
