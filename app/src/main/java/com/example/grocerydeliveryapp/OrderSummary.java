@@ -39,7 +39,7 @@ public class OrderSummary extends AppCompatActivity {
 
   LinearLayout orderSummary;
   private ProgressBar progressBar;
-//  private Button repeatOrderButton;
+  private Button repeatOrderButton;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class OrderSummary extends AppCompatActivity {
     progressBar = findViewById(R.id.orderSumLoader);
     orderSummary = findViewById(R.id.orderSummary);
     orderSumItemsTextView = findViewById(R.id.orderSumItems);
-//    repeatOrderButton = findViewById(R.id.repeatOrderBtn);
+    repeatOrderButton = findViewById(R.id.repeatOrderBtn);
 
     orderSummaryRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
@@ -67,6 +67,13 @@ public class OrderSummary extends AppCompatActivity {
     orderSummaryRecyclerView.setAdapter(orderSummaryAdapter);
 
     fetchOrderSummary(orderId);
+
+    repeatOrderButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        repeatOrder();
+      }
+    });
 
   }
 
@@ -128,5 +135,9 @@ public class OrderSummary extends AppCompatActivity {
 
     double grandTotal = itemsTotal + handlingCharge + deliveryCharge;
     grandTotalTextView.setText("₹" + grandTotal);
+  }
+
+  private void repeatOrder() {
+
   }
 }
