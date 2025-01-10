@@ -81,25 +81,25 @@ public class OrdersFragment extends Fragment {
           order.setTime(document.getString("time"));
 
           // Parse products
-          List<ProductOrdersModel> products = new ArrayList<>();
-          List<Object> productsList = (List<Object>) document.get("products");
-
-          if (productsList != null) {
-            for (Object productObject : productsList) {
-              if (productObject instanceof HashMap) {
-                @SuppressWarnings("unchecked")
-                HashMap<String, Object> productMap = (HashMap<String, Object>) productObject;
-
-                ProductOrdersModel product = new ProductOrdersModel();
-                product.setProductId((String) productMap.get("productId"));
-                product.setQuantity(((Long) productMap.get("quantity")).intValue());
-
-                products.add(product);
-              }
-            }
-          }
-
-          order.setProducts(products);
+//          List<ProductOrdersModel> products = new ArrayList<>();
+//          List<Object> productsList = (List<Object>) document.get("products");
+//
+//          if (productsList != null) {
+//            for (Object productObject : productsList) {
+//              if (productObject instanceof HashMap) {
+//                @SuppressWarnings("unchecked")
+//                HashMap<String, Object> productMap = (HashMap<String, Object>) productObject;
+//
+//                ProductOrdersModel product = new ProductOrdersModel();
+//                product.setProductId((String) productMap.get("productId"));
+//                product.setQuantity(((Long) productMap.get("quantity")).intValue());
+//
+//                products.add(product);
+//              }
+//            }
+//          }
+//
+//          order.setProducts(products);
 
           // Add order to the list
           orderModelList.add(order);

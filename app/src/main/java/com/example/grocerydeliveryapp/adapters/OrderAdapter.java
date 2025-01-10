@@ -18,8 +18,8 @@ import java.util.List;
 
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHolder> {
 
-  private Context context;
-  private List<OrderModel> orderList;
+  private final Context context;
+  private final List<OrderModel> orderList;
 
   // Constructor
   public OrderAdapter(Context context, List<OrderModel> orderList) {
@@ -40,22 +40,28 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     // Get the current order
     OrderModel order = orderList.get(position);
 
-    // Set order details
-    holder.dateTextView.setText(order.getDate());
-    holder.timeTextView.setText(order.getTime());
-    holder.totalPriceTextView.setText("₹" + order.getTotalPrice());
+    if (order != null) {
+      // Set order details
+      holder.dateTextView.setText(order.getDate());
+      holder.timeTextView.setText(order.getTime());
+      holder.totalPriceTextView.setText("₹" + order.getTotalPrice());
 
-    // Set up nested RecyclerView for products
-    List<ProductOrdersModel> productList = order.getProducts();
-    ProductAdapter productAdapter = new ProductAdapter(context, productList);
-
-    holder.productsRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-    holder.productsRecyclerView.setAdapter(productAdapter);
+      // Set up nested RecyclerView for products
+//      List<ProductOrdersModel> productList = order.getProducts();
+//      ProductAdapter productAdapter = new ProductAdapter(context, productList);
+//
+//      if (holder.productsRecyclerView.getLayoutManager() == null) {
+//        holder.productsRecyclerView.setLayoutManager(
+//          new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+//        );
+//      }
+//      holder.productsRecyclerView.setAdapter(productAdapter);
+    }
   }
 
   @Override
   public int getItemCount() {
-    return orderList.size();
+    return (orderList != null) ? orderList.size() : 0;
   }
 
   // ViewHolder class for holding item views
@@ -68,7 +74,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
       dateTextView = itemView.findViewById(R.id.orderDate);
       timeTextView = itemView.findViewById(R.id.orderTime);
       totalPriceTextView = itemView.findViewById(R.id.orderTotal);
-      productsRecyclerView = itemView.findViewById(R.id.orderProductsImg);
+//      productsRecyclerView = itemView.findViewById(R.id.orderProductsImg);
     }
   }
 }

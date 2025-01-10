@@ -4,7 +4,7 @@ import java.util.List;
 
 public class OrderModel {
   public String orderId, totalPrice, date, time;
-  private List<ProductOrdersModel> products;
+//  public List<ProductOrdersModel> products;
 
   public OrderModel() {}
 
@@ -40,11 +40,11 @@ public class OrderModel {
     this.time = time;
   }
 
-  public List<ProductOrdersModel> getProducts() {
-    return products;
-  }
-
-  public void setProducts(List<ProductOrdersModel> products) {
-    this.products = products;
-  }
+//  public List<ProductOrdersModel> getProducts() {
+//    return products;
+//  }
+//
+//  public void setProducts(List<ProductOrdersModel> products) {
+//    this.products = products;
+//  }
 }
