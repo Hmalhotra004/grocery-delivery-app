@@ -49,5 +49,6 @@
     <string name="noItemCart">No Items in Cart</string>
     <string name="dot">•</string>
     <string name="Delivered">Delivered</string>
+    <string name="RepeatOrder">Repeat Order</string>
 
 </resources>
