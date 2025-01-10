@@ -1,6 +1,7 @@
 package com.example.grocerydeliveryapp;
 
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,25 +23,16 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 public class CartFragment extends Fragment {
-  private static final String ARG_PARAM1 = "param1";
-  private static final String ARG_PARAM2 = "param2";
-  private String mParam1;
-  private String mParam2;
 
   public CartFragment() {
     // Required empty public constructor
-  }
-
-  public static CartFragment newInstance(String param1, String param2) {
-    CartFragment fragment = new CartFragment();
-    Bundle args = new Bundle();
-    args.putString(ARG_PARAM1, param1);
-    args.putString(ARG_PARAM2, param2);
-    fragment.setArguments(args);
-    return fragment;
   }
 
   public List<CartModel> cartModelList;
@@ -48,16 +41,13 @@ public class CartFragment extends Fragment {
   public FirebaseAuth auth;
   public LinearLayout billDetails;
   public TextView fallback,itemsTotalTextView,grandTotalTextView;
+  public Button placeOrder;
   public double handlingCharge = 5.0;
   public double deliveryCharge = 25.0;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    if (getArguments() != null) {
-      mParam1 = getArguments().getString(ARG_PARAM1);
-      mParam2 = getArguments().getString(ARG_PARAM2);
-    }
   }
 
   @Override
@@ -71,6 +61,8 @@ public class CartFragment extends Fragment {
     fallback = view.findViewById(R.id.fallbackCart);
     billDetails = view.findViewById(R.id.billDetailsL);
 
+    placeOrder = view.findViewById(R.id.placeOrderBtn);
+
      itemsTotalTextView = view.findViewById(R.id.cartItemsTotal);
      grandTotalTextView = view.findViewById(R.id.grandTotal);
 
@@ -83,6 +75,65 @@ public class CartFragment extends Fragment {
     cartRecyclerView.setAdapter(cartAdapters);
 
     loadCartItems();
+
+    placeOrder.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        String userId = auth.getCurrentUser() != null ? auth.getCurrentUser().getUid() : null;
+
+        if (userId == null) {
+          Intent intent = new Intent(getActivity(), LoginActivity.class);
+          startActivity(intent);
+          return;
+        }
+
+        if (cartModelList.isEmpty()) {
+          Toast.makeText(getContext(), "Cart is empty.", Toast.LENGTH_SHORT).show();
+          return;
+        }
+
+        List<Map<String, Object>> products = new ArrayList<>();
+        double totalPrice = 0.0;
+
+        // Prepare product data
+        for (CartModel cartItem : cartModelList) {
+          Map<String, Object> product = new HashMap<>();
+          product.put("productId", cartItem.getProductId());
+          product.put("name", cartItem.getName());
+          product.put("description", cartItem.getDescription());
+          product.put("price", cartItem.getPrice());
+          product.put("imageUrl", cartItem.getImageUrl());
+          product.put("quantity", String.valueOf(cartItem.getQuantity()));
+          products.add(product);
+
+          totalPrice += cartItem.getPrice() * cartItem.getQuantity();
+        }
+
+        double grandTotal = totalPrice + handlingCharge + deliveryCharge;
+
+        String currentDate = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(new Date());
+        String currentTime = new SimpleDateFormat("h:mm a", Locale.getDefault()).format(new Date());
+
+        Map<String, Object> order = new HashMap<>();
+        order.put("date", currentDate);
+        order.put("products", products);
+        order.put("time", currentTime);
+        order.put("totalPrice", String.format("%.2f", grandTotal));
+        order.put("userId", userId);
+
+        db.collection("orders")
+          .add(order)
+          .addOnSuccessListener(documentReference -> {
+            String orderId = documentReference.getId();
+            Toast.makeText(getContext(), "Order placed successfully!", Toast.LENGTH_SHORT).show();
+
+            clearCart(userId);
+          })
+          .addOnFailureListener(e -> {
+            Toast.makeText(getContext(), "Failed to place the order.", Toast.LENGTH_SHORT).show();
+          });
+      }
+    });
 
     return view;
   }
@@ -135,6 +186,25 @@ public class CartFragment extends Fragment {
             grandTotalTextView.setText(String.format("₹%.2f", grandTotal));
           }
         }
+      });
+  }
+
+  private void clearCart(String userId) {
+    db.collection("cart")
+      .whereEqualTo("userId", userId)
+      .get()
+      .addOnSuccessListener(querySnapshot -> {
+        for (QueryDocumentSnapshot document : querySnapshot) {
+          document.getReference().delete();
+        }
+
+        cartModelList.clear();
+        cartAdapters.notifyDataSetChanged();
+        fallback.setVisibility(View.VISIBLE);
+        billDetails.setVisibility(View.GONE);
+      })
+      .addOnFailureListener(e -> {
+        Toast.makeText(getContext(), "Failed to clear the cart.", Toast.LENGTH_SHORT).show();
       });
   }
 }

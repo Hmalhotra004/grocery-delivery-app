@@ -47,5 +47,7 @@
     <string name="GrandTotal">Grand Total</string>
     <string name="PlaceOrder">Place Order</string>
     <string name="noItemCart">No Items in Cart</string>
+    <string name="dot">•</string>
+    <string name="Delivered">Delivered</string>
 
 </resources>

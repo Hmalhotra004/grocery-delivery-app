@@ -7,17 +7,6 @@ public class CartModel {
   public String imageUrl;
 
   public CartModel() {}
-  // Constructor
-
-//  public CartModel(String name, double price, int quantity, String imageUrl,String description, String productId) {
-//    this.name = name;
-//    this.price = price;
-//    this.quantity = quantity;
-//    this.imageUrl = imageUrl;
-//    this.description = description;
-//    this.productId = productId;
-//  }
-
 
   // Getters and setters
   public String getName() {

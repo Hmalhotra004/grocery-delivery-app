@@ -73,7 +73,7 @@ public class CartAdapters extends RecyclerView.Adapter<CartAdapters.ViewHolder> 
   }
 
   private void updateCartItem(CartModel cartItem, int position) {
-    db.collection("cart").document(cartItem.getProductId()) // Ensure `cartItem` has a unique `id` field
+    db.collection("cart").document(cartItem.getProductId())
       .update("quantity", cartItem.getQuantity())
       .addOnSuccessListener(aVoid -> {
         notifyItemChanged(position);
@@ -85,10 +85,13 @@ public class CartAdapters extends RecyclerView.Adapter<CartAdapters.ViewHolder> 
     db.collection("cart").document(cartItem.getProductId())
       .delete()
       .addOnSuccessListener(aVoid -> {
-        cartItems.remove(position);
-        notifyItemRemoved(position);
+        if (position >= 0 && position < cartItems.size()) {
+          cartItems.remove(position);
+          notifyItemRemoved(position);
+        }
       })
-      .addOnFailureListener(e -> Toast.makeText(context, "Failed to remove item from cart.", Toast.LENGTH_SHORT).show());
+      .addOnFailureListener(e ->
+        Toast.makeText(context, "Failed to remove item from cart.", Toast.LENGTH_SHORT).show());
   }
 
   @Override
