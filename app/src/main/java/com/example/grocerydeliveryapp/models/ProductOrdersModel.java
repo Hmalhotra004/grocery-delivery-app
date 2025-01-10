@@ -1,10 +1,24 @@
 package com.example.grocerydeliveryapp.models;
 
 public class ProductOrdersModel {
-  public String productId;
+  public String productId, imageUrl;
   public int quantity;
 
   public ProductOrdersModel() {}
+
+  public ProductOrdersModel(String productId, int quantity,String imageUrl) {
+    this.productId = productId;
+    this.quantity = quantity;
+    this.imageUrl = imageUrl;
+  }
+
+  public String getImageUrl() {
+    return imageUrl;
+  }
+
+  public void setImageUrl(String imageUrl) {
+    this.imageUrl = imageUrl;
+  }
 
   public String getProductId() {
     return productId;

@@ -37,12 +37,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     // Get the current product
     ProductOrdersModel product = productList.get(position);
 
-    // Here you can load product images
-    // For example, using Glide or Picasso to load the product image
-    // Glide.with(context).load(product.getImageUrl()).into(holder.productImageView);
+    holder.productImageView.setImageResource(getImageResource(product.getImageUrl()));
+  }
 
-    // Placeholder for product image
-    holder.productImageView.setImageResource(R.drawable.placeholder);
+  private int getImageResource(String imageName) {
+    return context.getResources().getIdentifier(imageName, "drawable", context.getPackageName());
   }
 
   @Override
