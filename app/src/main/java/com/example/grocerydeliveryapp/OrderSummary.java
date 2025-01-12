@@ -1,5 +1,6 @@
 package com.example.grocerydeliveryapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -7,8 +8,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,6 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -71,7 +76,7 @@ public class OrderSummary extends AppCompatActivity {
     repeatOrderButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        repeatOrder();
+        repeatOrder(orderId);
       }
     });
 
@@ -137,7 +142,45 @@ public class OrderSummary extends AppCompatActivity {
     grandTotalTextView.setText("₹" + grandTotal);
   }
 
-  private void repeatOrder() {
+  private void repeatOrder(String orderId) {
+    String userId = auth.getCurrentUser().getUid();
+    db.collection("orders")
+      .document(orderId)
+      .get()
+      .addOnCompleteListener(task -> {
+        if (task.isSuccessful()) {
+          DocumentSnapshot documentSnapshot = task.getResult();
+          if (documentSnapshot != null && documentSnapshot.exists()) {
+            List<Map<String, Object>> productsList =
+              (List<Map<String, Object>>) documentSnapshot.get("products");
 
+            if (productsList != null) {
+              for (Map<String, Object> productMap : productsList) {
+                Map<String, Object> cartProduct = new HashMap<>();
+                cartProduct.put("productId", productMap.get("productId"));
+                cartProduct.put("imageUrl", productMap.get("imageUrl"));
+                cartProduct.put("description", productMap.get("description"));
+                cartProduct.put("name", productMap.get("name"));
+                cartProduct.put("quantity", productMap.get("quantity"));
+                cartProduct.put("price", productMap.get("price"));
+                cartProduct.put("userId", userId);
+
+                // Add the product to the cart in Firestore
+                db.collection("cart")
+                  .add(cartProduct)
+                  .addOnSuccessListener(documentReference ->
+                    Log.d("RepeatOrder", "Product added to cart: " + documentReference.getId()))
+                  .addOnFailureListener(e ->
+                    Log.e("RepeatOrder", "Failed to add product to cart", e));
+              }
+              Toast.makeText(this,"Order added to cart",Toast.LENGTH_LONG).show();
+            }
+          } else {
+            Log.e("OrderSummary", "Document not found or empty");
+          }
+        } else {
+          Log.e("OrderSummary", "Error fetching order data", task.getException());
+        }
+      });
   }
 }
