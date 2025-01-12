@@ -50,15 +50,15 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
       holder.totalPriceTextView.setText("₹" + order.getTotalPrice());
 
       // Set up nested RecyclerView for products
-//      List<ProductOrdersModel> productList = order.getProducts();
-//      ProductAdapter productAdapter = new ProductAdapter(context, productList);
-//
-//      if (holder.productsRecyclerView.getLayoutManager() == null) {
-//        holder.productsRecyclerView.setLayoutManager(
-//          new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-//        );
-//      }
-//      holder.productsRecyclerView.setAdapter(productAdapter);
+      List<ProductOrdersModel> productList = order.getProducts();
+      ProductAdapter productAdapter = new ProductAdapter(context, productList);
+
+      if (holder.productsRecyclerView.getLayoutManager() == null) {
+        holder.productsRecyclerView.setLayoutManager(
+          new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        );
+      }
+      holder.productsRecyclerView.setAdapter(productAdapter);
 
       holder.orderCard.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -76,7 +76,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
     return (orderList != null) ? orderList.size() : 0;
   }
 
-  // ViewHolder class for holding item views
   public static class OrderViewHolder extends RecyclerView.ViewHolder {
     TextView dateTextView, timeTextView, totalPriceTextView;
     RecyclerView productsRecyclerView;
@@ -88,7 +87,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.OrderViewHol
       timeTextView = itemView.findViewById(R.id.orderTime);
       totalPriceTextView = itemView.findViewById(R.id.orderTotal);
       orderCard = itemView.findViewById(R.id.orderCard);
-//      productsRecyclerView = itemView.findViewById(R.id.orderProductsImg);
+      productsRecyclerView = itemView.findViewById(R.id.orderProductsImg);
     }
   }
 }

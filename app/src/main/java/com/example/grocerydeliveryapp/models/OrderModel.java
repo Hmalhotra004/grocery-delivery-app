@@ -1,10 +1,13 @@
 package com.example.grocerydeliveryapp.models;
 
+import com.google.firebase.Timestamp;
+
 import java.util.List;
 
 public class OrderModel {
   public String orderId, totalPrice, date, time;
-//  public List<ProductOrdersModel> products;
+  public Timestamp sortDate;
+  private List<ProductOrdersModel> products;
 
   public OrderModel() {}
 
@@ -40,11 +43,19 @@ public class OrderModel {
     this.time = time;
   }
 
-//  public List<ProductOrdersModel> getProducts() {
-//    return products;
-//  }
-//
-//  public void setProducts(List<ProductOrdersModel> products) {
-//    this.products = products;
-//  }
+  public Timestamp getSortDate() {
+    return sortDate;
+  }
+
+  public void setSortDate(Timestamp sortDate) {
+    this.sortDate = sortDate;
+  }
+
+    public List<ProductOrdersModel> getProducts() {
+    return products;
+  }
+
+  public void setProducts(List<ProductOrdersModel> products) {
+    this.products = products;
+  }
 }
