@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,9 +19,11 @@ import com.example.grocerydeliveryapp.models.ProductOrdersModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -58,7 +61,6 @@ public class OrdersFragment extends Fragment {
     orderAdapter = new OrderAdapter(getActivity(), orderModelList);
     ordersRecyclerView.setAdapter(orderAdapter);
 
-    // Fetch orders
     fetchOrders();
 
     return view;
@@ -69,7 +71,6 @@ public class OrdersFragment extends Fragment {
 
     progressBar.setVisibility(View.VISIBLE);
 
-    // Query orders for the current user
     db.collection("orders")
       .whereEqualTo("userId", userId)
       .get()
@@ -83,32 +84,19 @@ public class OrdersFragment extends Fragment {
           order.setOrderId(document.getId());
           order.setTotalPrice(document.getString("totalPrice"));
           order.setDate(document.getString("date"));
+          order.setSortDate(document.getTimestamp("sortDate"));
           order.setTime(document.getString("time"));
-
-          // Parse products
-//          List<ProductOrdersModel> products = new ArrayList<>();
-//          List<Object> productsList = (List<Object>) document.get("products");
-//
-//          if (productsList != null) {
-//            for (Object productObject : productsList) {
-//              if (productObject instanceof HashMap) {
-//                @SuppressWarnings("unchecked")
-//                HashMap<String, Object> productMap = (HashMap<String, Object>) productObject;
-//
-//                ProductOrdersModel product = new ProductOrdersModel();
-//                product.setProductId((String) productMap.get("productId"));
-//                product.setQuantity(((Long) productMap.get("quantity")).intValue());
-//
-//                products.add(product);
-//              }
-//            }
-//          }
-//
-//          order.setProducts(products);
 
           // Add order to the list
           orderModelList.add(order);
         }
+
+        Collections.sort(orderModelList, (order1, order2) -> {
+          if (order2.getSortDate() == null || order1.getSortDate() == null) {
+            return 0; // Handle cases where sortDate is null
+          }
+          return order2.getSortDate().compareTo(order1.getSortDate());
+        });
 
         // Notify the adapter of the changes
         orderAdapter.notifyDataSetChanged();

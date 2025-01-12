@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.grocerydeliveryapp.adapters.CartAdapters;
 import com.example.grocerydeliveryapp.models.CartModel;
+import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -120,9 +121,11 @@ public class CartFragment extends Fragment {
         String currentTime = new SimpleDateFormat("h:mm a", Locale.getDefault()).format(new Date());
 
         String orderId = UUID.randomUUID().toString();
+        Timestamp timestamp = new Timestamp(new Date());
 
         Map<String, Object> order = new HashMap<>();
         order.put("orderId", orderId);
+        order.put("sortDate",timestamp);
         order.put("date", currentDate);
         order.put("products", products);
         order.put("time", currentTime);
