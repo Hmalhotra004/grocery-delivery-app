@@ -50,5 +50,8 @@
     <string name="dot">•</string>
     <string name="Ordered">Ordered</string>
     <string name="RepeatOrder">Repeat Order</string>
+    <string name="Welcome">Welcome to Eatly\n</string>
+    <string name="Signup">Signup</string>
+    <string name="login">Login</string>
 
 </resources>
