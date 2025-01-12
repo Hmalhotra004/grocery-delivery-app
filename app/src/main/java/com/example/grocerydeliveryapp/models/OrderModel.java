@@ -7,7 +7,7 @@ import java.util.List;
 public class OrderModel {
   public String orderId, totalPrice, date, time;
   public Timestamp sortDate;
-//  public List<ProductOrdersModel> products;
+  private List<ProductOrdersModel> products;
 
   public OrderModel() {}
 
@@ -51,11 +51,11 @@ public class OrderModel {
     this.sortDate = sortDate;
   }
 
-  //  public List<ProductOrdersModel> getProducts() {
-//    return products;
-//  }
-//
-//  public void setProducts(List<ProductOrdersModel> products) {
-//    this.products = products;
-//  }
+    public List<ProductOrdersModel> getProducts() {
+    return products;
+  }
+
+  public void setProducts(List<ProductOrdersModel> products) {
+    this.products = products;
+  }
 }
